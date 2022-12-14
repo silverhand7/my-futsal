@@ -20,4 +20,9 @@ class Product extends Model
     {
         return $this->belongsTo(Category::class);
     }
+
+    public function getPrice()
+    {
+        return 'Rp' . number_format($this->price);
+    }
 }

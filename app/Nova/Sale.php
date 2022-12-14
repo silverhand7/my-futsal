@@ -4,32 +4,29 @@ namespace App\Nova;
 
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\BelongsTo;
-use Laravel\Nova\Fields\Currency;
+use Laravel\Nova\Fields\Field;
+use Laravel\Nova\Fields\FormData;
+use Laravel\Nova\Fields\Heading;
 use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\Number;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
-class Product extends Resource
+class Sale extends Resource
 {
     /**
      * The model the resource corresponds to.
      *
-     * @var class-string<\App\Models\Product>
+     * @var class-string<\App\Models\Sale>
      */
-    public static $model = \App\Models\Product::class;
+    public static $model = \App\Models\Sale::class;
 
     /**
      * The single value that should be used to represent the resource when being displayed.
      *
      * @var string
      */
-    public static $title = 'name';
-
-    public function title()
-    {
-        return $this->name . ' — ' . $this->getPrice();
-    }
+    public static $title = 'no';
 
     /**
      * The columns that should be searched.
@@ -37,7 +34,7 @@ class Product extends Resource
      * @var array
      */
     public static $search = [
-        'name',
+        'id', 'no',
     ];
 
     /**
@@ -50,14 +47,22 @@ class Product extends Resource
     {
         return [
             ID::make()->sortable(),
-            Text::make('Name')
-                ->sortable()
-                ->rules('required', 'max:255'),
-            BelongsTo::make('Category'),
-            Currency::make('Price')
+            Text::make('Tgl', function(){
+                    return $this->sold_at->format('d M Y H:i');
+                })
+                ->exceptOnForms(),
+            Text::make('No')
+                ->default(function(){
+                    return (new $this::$model)->getDefaultSalesNumber();
+                })
                 ->rules('required'),
-            Number::make('Stock')->default(1)
-                ->rules('required')
+            BelongsTo::make('Product'),
+            Number::make('Qty')
+                ->default(1),
+            Text::make('Total', function(){
+                return 'Rp ' . number_format($this->qty * $this->product->price);
+            })
+            ->exceptOnForms(),
         ];
     }
 
