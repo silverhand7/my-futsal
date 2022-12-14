@@ -4,9 +4,11 @@ namespace App\Nova;
 
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rules;
+use Laravel\Nova\Fields\Badge;
 use Laravel\Nova\Fields\Gravatar;
 use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\Password;
+use Laravel\Nova\Fields\Select;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
@@ -32,7 +34,7 @@ class User extends Resource
      * @var array
      */
     public static $search = [
-        'id', 'name', 'email',
+        'id', 'name', 'email', 'level'
     ];
 
     /**
@@ -62,6 +64,22 @@ class User extends Resource
                 ->onlyOnForms()
                 ->creationRules('required', Rules\Password::defaults())
                 ->updateRules('nullable', Rules\Password::defaults()),
+
+            Select::make('Level')
+                ->options([
+                    'customer' => 'Customer',
+                    'admin' => 'Admin',
+                    'owner' => 'Owner',
+                ])
+                ->default('admin')
+                ->onlyOnForms()
+                ->rules('required'),
+
+            Badge::make('Level')->map([
+                'customer' => 'info',
+                'admin' => 'success',
+                'owner' => 'warning',
+            ]),
         ];
     }
 
