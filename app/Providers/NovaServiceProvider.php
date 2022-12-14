@@ -5,6 +5,7 @@ namespace App\Providers;
 use Illuminate\Support\Facades\Gate;
 use Laravel\Nova\Nova;
 use Laravel\Nova\NovaApplicationServiceProvider;
+use Illuminate\Support\Facades\Blade;
 
 class NovaServiceProvider extends NovaApplicationServiceProvider
 {
@@ -16,7 +17,15 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
     public function boot()
     {
         parent::boot();
+        Nova::withBreadcrumbs();
         Nova::style('custom-css', asset('css/custom.css'));
+        Nova::footer(function ($request) {
+            return Blade::render('
+                <div class="mt-8 leading-normal text-xs text-gray-500 space-y-1">
+                    <p class="text-center">© ' . date('Y') . ' – My Stadium Futsal Bali</p>
+                </div>
+            ');
+        });
     }
 
     /**
