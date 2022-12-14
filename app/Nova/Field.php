@@ -3,30 +3,28 @@
 namespace App\Nova;
 
 use Illuminate\Http\Request;
-use Laravel\Nova\Fields\BelongsTo;
-use Laravel\Nova\Fields\Field;
-use Laravel\Nova\Fields\FormData;
-use Laravel\Nova\Fields\Heading;
+use Laravel\Nova\Fields\Currency;
 use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\Number;
+use Laravel\Nova\Fields\Select;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
-class Sale extends Resource
+class Field extends Resource
 {
     /**
      * The model the resource corresponds to.
      *
-     * @var class-string<\App\Models\Sale>
+     * @var class-string<\App\Models\Field>
      */
-    public static $model = \App\Models\Sale::class;
+    public static $model = \App\Models\Field::class;
 
     /**
      * The single value that should be used to represent the resource when being displayed.
      *
      * @var string
      */
-    public static $title = 'no';
+    public static $title = 'name';
 
     /**
      * The columns that should be searched.
@@ -34,7 +32,7 @@ class Sale extends Resource
      * @var array
      */
     public static $search = [
-        'id', 'no',
+        'id', 'name', 'size'
     ];
 
     /**
@@ -47,23 +45,16 @@ class Sale extends Resource
     {
         return [
             ID::make()->sortable(),
-            Text::make('Tgl', function(){
-                    return $this->sold_at->format('d M Y H:i');
-                })
-                ->exceptOnForms(),
-            Text::make('No')
-                ->default(function(){
-                    return (new $this::$model)->getDefaultSalesNumber();
-                })
+            Text::make('Name')
+                ->rules('required', 'max:255'),
+            Select::make('Size')
+                ->options([
+                    'normal' => 'Normal',
+                    'big' => 'Big',
+                ]),
+            Currency::make('Harge Perjam', 'hourly_rate')
                 ->rules('required'),
-            BelongsTo::make('Product'),
-            Number::make('Qty')
-                ->rules('required')
-                ->default(1),
-            Text::make('Total', function(){
-                return 'Rp ' . number_format($this->qty * $this->product->price);
-            })
-            ->exceptOnForms(),
+            Text::make('Note')->placeholder('(opsional)')
         ];
     }
 
