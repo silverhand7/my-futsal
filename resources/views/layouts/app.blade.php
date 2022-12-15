@@ -18,7 +18,7 @@
     </style>
 </head>
 <body style="background-color:#F1F5F9">
-    <nav class="navbar navbar-expand-lg bg-white mb-4">
+    <nav class="navbar navbar-expand-lg bg-white">
         <div class="container-fluid">
           <a class="navbar-brand" href="{{ url('/') }}">
             <img src="{{ asset('img/logo.png') }}" width="250">
@@ -38,7 +38,7 @@
             <div class="d-fex">
                 @guest('customer')
                     <a class="btn btn-primary btn-sm" href="{{ route('customer.login.form') }}">Login</a>
-                    <a class="btn btn-outline-primary btn-sm" href="#">Register</a>
+                    <a class="btn btn-outline-primary btn-sm" href="{{ route('customer.register.form') }}">Register</a>
                 @endguest
 
                 @auth('customer')
@@ -51,6 +51,13 @@
           </div>
         </div>
     </nav>
+    @if(session()->has('success'))
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+      <strong>Selamat!</strong> {{ session()->get('success') }}
+      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    @endif
+    <div class="mb-4"></div>
     @yield('content')
 </body>
 </html>

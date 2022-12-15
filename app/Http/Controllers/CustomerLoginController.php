@@ -14,6 +14,9 @@ class CustomerLoginController extends Controller
 
     public function loginForm()
     {
+        if (Auth::guard('customer')->check()) {
+            return redirect('/');
+        }
         return view('auth.customer-login');
     }
 
@@ -25,7 +28,7 @@ class CustomerLoginController extends Controller
         ]);
 
         if (Auth::guard('customer')->attempt($request->only(['email','password']), $request->get('remember'))){
-            return redirect()->intended('/admin/dashboard');
+            return redirect('/');
         }
 
         return $this->sendFailedLoginResponse($request);
