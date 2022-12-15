@@ -2,7 +2,9 @@
     "private": true,
     "scripts": {
         "dev": "vite",
-        "build": "vite build"
+        "build": "vite build",
+        "build-full-calendar": "cd nova-components/FullCalendar && npm run dev",
+        "build-full-calendar-prod": "cd nova-components/FullCalendar && npm run prod"
     },
     "devDependencies": {
         "autoprefixer": "^10.4.13",
