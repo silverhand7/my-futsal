@@ -21,30 +21,16 @@ import idLocale from '@fullcalendar/core/locales/id'
 let todayStr = new Date().toISOString().replace(/T.*$/, '') // YYYY-MM-DD of today
 
 export default {
+  props: {
+    bookings: Object
+  },
   components: {
     FullCalendar
   },
   data() {
     return {
-      calendarOptions: {
-        locale: idLocale,
-        plugins: [ timeGridPlugin, interactionPlugin ],
-        businessHours: {
-          daysOfWeek: [0, 1, 2, 3, 4, 5, 6],
-          startTime: '10:00', // a start time (10am in this example)
-          endTime: '24:00',
-        },
-        selectConstraint: "businessHours",
-        initialView: 'timeGridWeek',
-        initialEvents: [{
-          id: 1,
-          title: 'futsal',
-          start:todayStr + 'T12:00:00'
-        }],
-        selectable: true,
-        editable: true,
-        select: this.handleDateSelect,
-      },
+      calendarData: [],
+      calendarOptions: {},
     }
   },
   methods: {
@@ -67,9 +53,32 @@ export default {
 
     },
   },
-  mounted() {
-    //
-  },
+  created() {
+    for (let i = 0; i < this.bookings.length; i++){
+      this.calendarData.push({
+        'id': this.bookings[i].id,
+        'title': 'booking ' + this.bookings[i].id,
+        'start': this.bookings[i].date_iso,
+        //'end': '2022-12-15T10:00:00'
+      })
+    }
+
+    this.calendarOptions = {
+          locale: idLocale,
+          plugins: [ timeGridPlugin, interactionPlugin ],
+          businessHours: {
+            daysOfWeek: [0, 1, 2, 3, 4, 5, 6],
+            startTime: '10:00', // a start time (10am in this example)
+            endTime: '24:00',
+          },
+          selectConstraint: "businessHours",
+          initialView: 'timeGridWeek',
+          initialEvents: this.calendarData,
+          selectable: true,
+          editable: true,
+          select: this.handleDateSelect,
+        }
+    }
 }
 </script>
 

@@ -15388,31 +15388,16 @@ __webpack_require__.r(__webpack_exports__);
 var todayStr = new Date().toISOString().replace(/T.*$/, ''); // YYYY-MM-DD of today
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  props: {
+    bookings: Object
+  },
   components: {
     FullCalendar: _fullcalendar_vue3__WEBPACK_IMPORTED_MODULE_0__["default"]
   },
   data: function data() {
     return {
-      calendarOptions: {
-        locale: _fullcalendar_core_locales_id__WEBPACK_IMPORTED_MODULE_3__["default"],
-        plugins: [_fullcalendar_timegrid__WEBPACK_IMPORTED_MODULE_1__["default"], _fullcalendar_interaction__WEBPACK_IMPORTED_MODULE_2__["default"]],
-        businessHours: {
-          daysOfWeek: [0, 1, 2, 3, 4, 5, 6],
-          startTime: '10:00',
-          // a start time (10am in this example)
-          endTime: '24:00'
-        },
-        selectConstraint: "businessHours",
-        initialView: 'timeGridWeek',
-        initialEvents: [{
-          id: 1,
-          title: 'futsal',
-          start: todayStr + 'T12:00:00'
-        }],
-        selectable: true,
-        editable: true,
-        select: this.handleDateSelect
-      }
+      calendarData: [],
+      calendarOptions: {}
     };
   },
   methods: {
@@ -15434,8 +15419,32 @@ var todayStr = new Date().toISOString().replace(/T.*$/, ''); // YYYY-MM-DD of to
       }
     }
   },
-  mounted: function mounted() {
-    //
+  created: function created() {
+    for (var i = 0; i < this.bookings.length; i++) {
+      this.calendarData.push({
+        'id': this.bookings[i].id,
+        'title': 'booking ' + this.bookings[i].id,
+        'start': this.bookings[i].date_iso
+        //'end': '2022-12-15T10:00:00'
+      });
+    }
+
+    this.calendarOptions = {
+      locale: _fullcalendar_core_locales_id__WEBPACK_IMPORTED_MODULE_3__["default"],
+      plugins: [_fullcalendar_timegrid__WEBPACK_IMPORTED_MODULE_1__["default"], _fullcalendar_interaction__WEBPACK_IMPORTED_MODULE_2__["default"]],
+      businessHours: {
+        daysOfWeek: [0, 1, 2, 3, 4, 5, 6],
+        startTime: '10:00',
+        // a start time (10am in this example)
+        endTime: '24:00'
+      },
+      selectConstraint: "businessHours",
+      initialView: 'timeGridWeek',
+      initialEvents: this.calendarData,
+      selectable: true,
+      editable: true,
+      select: this.handleDateSelect
+    };
   }
 });
 

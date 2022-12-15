@@ -1,5 +1,7 @@
 <?php
 
+use App\Models\Booking;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Route;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
@@ -15,5 +17,9 @@ use Laravel\Nova\Http\Requests\NovaRequest;
 */
 
 Route::get('/', function (NovaRequest $request) {
-    return inertia('FullCalendar');
+    $bookings = Booking::whereBetween('date', [Carbon::now()->startOfWeek()->format('Y-m-d'), Carbon::now()->endOfWeek()->format('Y-m-d')])->get();
+
+    return inertia('FullCalendar', [
+        'bookings' => $bookings
+    ]);
 });
