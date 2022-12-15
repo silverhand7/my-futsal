@@ -21,7 +21,7 @@ return new class extends Migration
             $table->time('ending_hour');
             $table->string('note')->nullable();
             $table->string('proof_of_payment')->nullable();
-            $table->enum('status', ['pending', 'booked', 'canceled']);
+            $table->enum('status', ['pending', 'paid', 'rejected', 'booked', 'canceled']);
             $table->foreignId('customer_id')->constrained();
             $table->timestamps();
         });

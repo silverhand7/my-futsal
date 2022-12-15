@@ -8,6 +8,7 @@ use Laravel\Nova\Fields\Date;
 use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Fields\Image;
+use Laravel\Nova\Fields\Select;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
 class Booking extends Resource
@@ -55,6 +56,17 @@ class Booking extends Resource
             Text::make('Jam Mulai', 'starting_hour')->withMeta(['type' => 'time']),
             Text::make('Jam Selesai', 'ending_hour')->withMeta(['type' => 'time']),
             Image::make('Bukti Pembayaran', 'proof_of_payment')->disk('public'),
+            Select::make('Status')
+                ->options([
+                    'pending' => 'pending',
+                    'paid' => 'paid',
+                    'rejected' => 'rejected',
+                    'booked' => 'booked',
+                    'canceled' => 'canceled',
+                ])
+                ->default('admin')
+                ->onlyOnForms()
+                ->rules('required'),
         ];
     }
 
