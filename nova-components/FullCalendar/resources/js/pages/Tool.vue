@@ -1,7 +1,6 @@
 <template>
   <div>
-    <Head title="Full Calendar" />
-
+    <Head title="Full Calendar"/>
     <Heading class="mb-6">
       <div>
         Full Calendars
@@ -41,9 +40,11 @@ export default {
     }
   },
   methods: {
-    // handleEventClick(selectInfo) {
-    //  alert('test');
-    // },
+    handleEventClick(selectInfo) {
+      let id = selectInfo.event._def.publicId;
+      window.location = './resources/bookings/' + id;
+
+    },
     // handleDateSelect(selectInfo) {
     //   if(window.confirm(`Anda akan membooking lapangan di jam ${selectInfo.startStr} sampai ${selectInfo.endStr}`)) {
     //     let calendarApi = selectInfo.view.calendar
@@ -63,20 +64,21 @@ export default {
   created() {
 
     this.calendarOptions = {
-          locale: idLocale,
-          plugins: [ timeGridPlugin ],
-          businessHours: {
-            daysOfWeek: [0, 1, 2, 3, 4, 5, 6],
-            startTime: '10:00', // a start time (10am in this example)
-            endTime: '24:00',
-          },
-          selectConstraint: "businessHours",
-          initialView: 'timeGridWeek',
-          initialEvents: this.bookings,
-          selectable: true,
-          editable: true,
-          select: this.handleDateSelect,
-        }
+        locale: idLocale,
+        plugins: [ timeGridPlugin ],
+        businessHours: {
+          daysOfWeek: [0, 1, 2, 3, 4, 5, 6],
+          startTime: '10:00', // a start time (10am in this example)
+          endTime: '24:00',
+        },
+        selectConstraint: "businessHours",
+        initialView: 'timeGridWeek',
+        initialEvents: this.bookings,
+        selectable: true,
+        editable: true,
+        select: this.handleDateSelect,
+        eventClick: this.handleEventClick
+      }
     }
 }
 </script>

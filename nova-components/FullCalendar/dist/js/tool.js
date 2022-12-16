@@ -15399,14 +15399,13 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   methods: {
-    // handleEventClick(selectInfo) {
-    //  alert('test');
-    // },
-    // handleDateSelect(selectInfo) {
+    handleEventClick: function handleEventClick(selectInfo) {
+      var id = selectInfo.event._def.publicId;
+      window.location = './resources/bookings/' + id;
+    } // handleDateSelect(selectInfo) {
     //   if(window.confirm(`Anda akan membooking lapangan di jam ${selectInfo.startStr} sampai ${selectInfo.endStr}`)) {
     //     let calendarApi = selectInfo.view.calendar
     //     calendarApi.unselect() // clear date selection
-
     //     calendarApi.addEvent({
     //       id: 1,
     //       title: 'booking futsal',
@@ -15415,7 +15414,6 @@ __webpack_require__.r(__webpack_exports__);
     //       allDay: selectInfo.allDay
     //     })
     //   }
-
     // },
   },
   created: function created() {
@@ -15433,7 +15431,8 @@ __webpack_require__.r(__webpack_exports__);
       initialEvents: this.bookings,
       selectable: true,
       editable: true,
-      select: this.handleDateSelect
+      select: this.handleDateSelect,
+      eventClick: this.handleEventClick
     };
   }
 });
