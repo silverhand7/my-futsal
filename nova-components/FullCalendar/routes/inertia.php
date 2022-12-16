@@ -18,8 +18,17 @@ use Laravel\Nova\Http\Requests\NovaRequest;
 
 Route::get('/', function (NovaRequest $request) {
     $bookings = Booking::whereBetween('date', [Carbon::now()->startOfWeek()->format('Y-m-d'), Carbon::now()->endOfWeek()->format('Y-m-d')])->get();
+    $bookingsData = [];
+    foreach ($bookings as $booking) {
+        $bookingsData[] = [
+            'id' => $booking->id,
+            'title' => 'booking-' . $booking->id,
+            'start' => $booking->date->format('Y-m-d').'T'.$booking->starting_hour,
+            'end' => $booking->date->format('Y-m-d').'T'.$booking->ending_hour
+        ];
+    }
 
     return inertia('FullCalendar', [
-        'bookings' => $bookings
+        'bookings' => $bookingsData
     ]);
 });
