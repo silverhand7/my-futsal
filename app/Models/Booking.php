@@ -24,6 +24,10 @@ class Booking extends Model
         'date' => 'date'
     ];
 
+    protected $appends = [
+        'date_iso',
+    ];
+
     public function field()
     {
         return $this->belongsTo(Field::class);
@@ -32,5 +36,10 @@ class Booking extends Model
     public function customer()
     {
         return $this->belongsTo(Customer::class);
+    }
+
+    public function getDateIsoAttribute()
+    {
+        return $this->date->toISOString();
     }
 }

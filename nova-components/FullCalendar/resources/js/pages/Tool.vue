@@ -15,7 +15,7 @@
 <script>
 import FullCalendar from '@fullcalendar/vue3'
 import timeGridPlugin from '@fullcalendar/timegrid'
-import interactionPlugin from '@fullcalendar/interaction'
+import interactionPlugin, { Draggable } from '@fullcalendar/interaction'
 import idLocale from '@fullcalendar/core/locales/id'
 
 let todayStr = new Date().toISOString().replace(/T.*$/, '') // YYYY-MM-DD of today
@@ -65,7 +65,7 @@ export default {
 
     this.calendarOptions = {
           locale: idLocale,
-          plugins: [ timeGridPlugin, interactionPlugin ],
+          plugins: [ timeGridPlugin ],
           businessHours: {
             daysOfWeek: [0, 1, 2, 3, 4, 5, 6],
             startTime: '10:00', // a start time (10am in this example)

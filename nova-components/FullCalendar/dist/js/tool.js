@@ -15431,7 +15431,7 @@ var todayStr = new Date().toISOString().replace(/T.*$/, ''); // YYYY-MM-DD of to
 
     this.calendarOptions = {
       locale: _fullcalendar_core_locales_id__WEBPACK_IMPORTED_MODULE_3__["default"],
-      plugins: [_fullcalendar_timegrid__WEBPACK_IMPORTED_MODULE_1__["default"], _fullcalendar_interaction__WEBPACK_IMPORTED_MODULE_2__["default"]],
+      plugins: [_fullcalendar_timegrid__WEBPACK_IMPORTED_MODULE_1__["default"]],
       businessHours: {
         daysOfWeek: [0, 1, 2, 3, 4, 5, 6],
         startTime: '10:00',

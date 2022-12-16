@@ -53,7 +53,7 @@ class Booking extends Resource
                     return $date->format('d/m/Y');
                 })
                 ->rules(['required']),
-            Text::make('Jam Mulai', 'starting_hour')->withMeta(['type' => 'time']),
+            Text::make('Jam Mulai', 'starting_hour')->withMeta(['type' => 'time', 'step' => '900']),
             Text::make('Jam Selesai', 'ending_hour')->withMeta(['type' => 'time']),
             Image::make('Bukti Pembayaran', 'proof_of_payment')->disk('public'),
             Select::make('Status')
