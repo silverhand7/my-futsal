@@ -2,6 +2,10 @@
     <div v-if="bookings.length != 0">
         <TheCalendar :bookings="bookings" />
     </div>
+    <div v-else>
+        <p class="mb-0">No data available</p>
+    </div>
+
 </template>
 
 <script>
@@ -22,17 +26,5 @@ export default {
         this.bookings = response['data'];
       })
   }
-  // methods: {
-  //   async getBookings() {
-  //     return await axios
-  //       .get('/api/get-bookings')
-  //       .then((response) => {
-  //         return response['data'];
-  //       })
-  //   }
-  // },
-  // created(){
-  //   console.log(this.getBookings());
-  // }
 }
 </script>

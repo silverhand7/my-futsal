@@ -60,19 +60,6 @@
     <div class="mb-4"></div>
     @yield('content')
 
-    <div class="container">
-      <div class="row">
-        <div class="col-12">
-          <div class="card">
-            <div class="card-body">
-              <div id="calendar-app"></div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-
     @vite('resources/js/app.js')
 </body>
 </html>
