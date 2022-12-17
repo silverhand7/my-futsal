@@ -1,7 +1,5 @@
 <template>
-    <div v-if="bookings.length != 0">
-        <FullCalendar :bookings="bookings" :options="calendarOptions"  />
-    </div>
+    <FullCalendar :bookings="bookings" :options="calendarOptions"  />
 </template>
 
 <script>
@@ -46,16 +44,6 @@ export default {
             window.location = './resources/bookings/' + id;
         }
     },
-    created(){
-        // mencoba append value nya tetap gagal saat sudah terload
-        // mencoba spread operator juga gagal
-        if (this.bookings.length != 0) {
-            this.calendarOptions.events = [
-                ...this.calendarOptions.events, this.bookings
-            ];
-        }
 
-       //console.log(this.bookings, this.calendarOptions);
-    }
 }
 </script>

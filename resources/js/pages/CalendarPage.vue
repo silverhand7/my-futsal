@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div v-if="bookings.length != 0">
         <TheCalendar :bookings="bookings" />
     </div>
 </template>
