@@ -2,9 +2,13 @@
 
 namespace App\Nova;
 
+use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
+use Laravel\Nova\Fields\FormData;
 use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\Date;
+use Laravel\Nova\Fields\Hidden;
 use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Fields\Image;
@@ -53,8 +57,24 @@ class Booking extends Resource
                     return $date->format('d/m/Y');
                 })
                 ->rules(['required']),
-            Text::make('Jam Mulai', 'starting_hour')->withMeta(['type' => 'time', 'step' => '900']),
-            Text::make('Jam Selesai', 'ending_hour')->withMeta(['type' => 'time']),
+            Text::make('Jam Mulai', 'starting_hour')
+                ->withMeta(['type' => 'time', 'step' => '900'])
+                ->rules(['required']),
+            Text::make('Jam Selesai', 'ending_hour')
+                ->withMeta(['type' => 'time'])
+                ->rules(['required']),
+
+            Hidden::make('starting_timestamp')
+                ->dependsOn(['date', 'starting_hour'],
+                function (Hidden $field, NovaRequest $request, FormData $formData) {
+                    $field->value = Carbon::parse(Str::before($formData->date, 'T') . ' ' . $formData->starting_hour)->timestamp;
+                }),
+            Hidden::make('ending_timestamp')
+                ->dependsOn(['date', 'ending_hour'],
+                function (Hidden $field, NovaRequest $request, FormData $formData) {
+                    $field->value = Carbon::parse(Str::before($formData->date, 'T') . ' ' . $formData->ending_hour)->timestamp;
+                }),
+
             Image::make('Bukti Pembayaran', 'proof_of_payment')->disk('public'),
             Select::make('Status')
                 ->options([
@@ -69,12 +89,13 @@ class Booking extends Resource
         ];
     }
 
-    // protected static function afterValidation(NovaRequest $request, $validator)
-    // {
-    //     if (self::somethingElseIsInvalid()) {
-    //         $validator->errors()->add('field', 'Something is wrong with this field!');
-    //     }
-    // }
+    protected static function afterValidation(NovaRequest $request, $validator)
+    {
+        
+        // if (self::somethingElseIsInvalid()) {
+        //     $validator->errors()->add('field', 'Something is wrong with this field!');
+        // }
+    }
 
     /**
      * Get the cards available for the request.

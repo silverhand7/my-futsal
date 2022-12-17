@@ -14,8 +14,8 @@ return new class extends Migration
     public function up()
     {
         Schema::table('bookings', function (Blueprint $table) {
-            $table->dateTime('starting_time')->after('starting_hour')->nullable();
-            $table->dateTime('ending_time')->after('ending_hour')->nullable();
+            $table->bigInteger('starting_timestamp')->after('starting_hour')->nullable();
+            $table->bigInteger('ending_timestamp')->after('ending_hour')->nullable();
         });
     }
 
@@ -27,7 +27,7 @@ return new class extends Migration
     public function down()
     {
         Schema::table('bookings', function (Blueprint $table) {
-            //
+            $table->dropColumn(['starting_timestamp', 'ending_timestamp']);
         });
     }
 };
