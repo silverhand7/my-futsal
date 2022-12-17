@@ -17,7 +17,9 @@ use Laravel\Nova\Http\Requests\NovaRequest;
 */
 
 Route::get('/', function (NovaRequest $request) {
-    $bookings = Booking::whereBetween('date', [Carbon::now()->startOfWeek()->format('Y-m-d'), Carbon::now()->endOfWeek()->format('Y-m-d')])->get();
+    $bookings = Booking::whereBetween('date', [Carbon::now()->startOfWeek()->format('Y-m-d'), Carbon::now()->endOfWeek()->format('Y-m-d')])
+    ->where('status', 'booked')
+    ->get();
     $bookingsData = [];
     foreach ($bookings as $booking) {
         $bookingsData[] = [

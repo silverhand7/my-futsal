@@ -65,17 +65,16 @@ class Booking extends Resource
                     'canceled' => 'canceled',
                 ])
                 ->default('admin')
-                ->onlyOnForms()
                 ->rules('required'),
         ];
     }
 
-    protected static function afterValidation(NovaRequest $request, $validator)
-    {
-        if (self::somethingElseIsInvalid()) {
-            $validator->errors()->add('field', 'Something is wrong with this field!');
-        }
-    }
+    // protected static function afterValidation(NovaRequest $request, $validator)
+    // {
+    //     if (self::somethingElseIsInvalid()) {
+    //         $validator->errors()->add('field', 'Something is wrong with this field!');
+    //     }
+    // }
 
     /**
      * Get the cards available for the request.

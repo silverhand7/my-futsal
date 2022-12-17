@@ -28,8 +28,8 @@ class FullCalendar extends Tool
      */
     public function menu(Request $request)
     {
-        return MenuSection::make('Booking')
+        return MenuSection::make('Booking Calendar')
             ->path('/full-calendar')
-            ->icon('server');
+            ->icon('calendar');
     }
 }
