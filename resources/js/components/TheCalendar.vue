@@ -31,7 +31,7 @@ export default {
 
                     selectConstraint: "businessHours",
                     initialView: 'timeGridWeek',
-                    //events: this.bookings,
+                    events: this.bookings,
                     selectable: true,
                     editable: true,
                     select: this.handleDateSelect,
@@ -48,9 +48,13 @@ export default {
     },
     created(){
         // mencoba append value nya tetap gagal saat sudah terload
+        // mencoba spread operator juga gagal
         if (this.bookings.length != 0) {
-            this.calendarOptions.events = this.bookings;
+            this.calendarOptions.events = [
+                ...this.calendarOptions.events, this.bookings
+            ];
         }
+
        //console.log(this.bookings, this.calendarOptions);
     }
 }
