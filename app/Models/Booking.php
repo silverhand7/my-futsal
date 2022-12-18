@@ -18,7 +18,7 @@ class Booking extends Model
         'ending_timestamp',
         'note',
         'proof_of_payment',
-        'status',
+        'status', //'pending', 'paid', 'rejected', 'booked', 'canceled'
         'customer_id'
     ];
 
@@ -43,5 +43,20 @@ class Booking extends Model
     public function getDateIsoAttribute()
     {
         return $this->date->toISOString();
+    }
+
+    public static function getBookedTime($date, $startingTime, $endingTime, $id = null)
+    {
+        return self::where(function($query) use ($startingTime, $endingTime){
+            $query->whereRaw("'$startingTime' BETWEEN starting_timestamp and ending_timestamp");
+            $query->orWhereRaw("'$endingTime' BETWEEN starting_timestamp and ending_timestamp");
+        })
+        ->where('date', $date)
+        ->where('ending_timestamp', '!=', $startingTime)
+        ->whereNotIn('status', ['rejected', 'canceled'])
+        ->when(!empty($id), function ($query) use($id) {
+            $query->where('id', '!=', $id);
+        })
+        ->get();
     }
 }

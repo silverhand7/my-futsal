@@ -2,6 +2,8 @@
 
 namespace App\Nova;
 
+use App\Http\Requests\BookingRequest;
+use App\Models\Booking as ModelsBooking;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
@@ -91,10 +93,21 @@ class Booking extends Resource
 
     protected static function afterValidation(NovaRequest $request, $validator)
     {
-        
-        // if (self::somethingElseIsInvalid()) {
-        //     $validator->errors()->add('field', 'Something is wrong with this field!');
-        // }
+        $startingTimestamp = $request->starting_timestamp;
+        $endingTimestamp = $request->ending_timestamp;
+        $date = $request->date;
+        $bookings = ModelsBooking::getBookedTime($date, $startingTimestamp, $endingTimestamp, $request->resourceId);
+        $bigFieldCount = $bookings->filter(function($value, $key) {
+            return $value->field->size == 'big';
+        })->count();
+        $normalFieldCount = $bookings->filter(function($value, $key) {
+            return $value->field->size == 'normal';
+        })->count();
+        if ($bigFieldCount >= 1 || $normalFieldCount >= 2) {
+            $validator->errors()->add('date', 'Tanggal dan jam tersebut sudah terbooking!');
+            $validator->errors()->add('starting_hour', 'Tanggal dan jam tersebut sudah terbooking!');
+            $validator->errors()->add('ending_hour', 'Tanggal dan jam tersebut sudah terbooking!');
+        }
     }
 
     /**
