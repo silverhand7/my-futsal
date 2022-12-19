@@ -96,26 +96,11 @@ class Booking extends Resource
         $startingTimestamp = $request->starting_timestamp;
         $endingTimestamp = $request->ending_timestamp;
         $date = $request->date;
-        $bookings = ModelsBooking::getBookedTime($date, $startingTimestamp, $endingTimestamp, $request->resourceId);
-        $bigFieldCount = $bookings->filter(function($value, $key) {
-            return $value->field->size == 'big';
-        })->count();
-        $normalFieldCount = $bookings->filter(function($value, $key) {
-            return $value->field->size == 'normal';
-        })->count();
+        $field = $request->field;
 
-        if ($request->field == 2) { // Lapangan besar
-            if ($bigFieldCount != 0 && $normalFieldCount != 0) {
-                self::showBookingCollisonError($validator);
-            }
-        }
+        $bookings = ModelsBooking::getBookedTime($field, $date, $startingTimestamp, $endingTimestamp, $request->resourceId);
 
-        // Check if it has the same time when booking the field, if it has more than 2, shows error. 
-        $bookingsSameTimeCount = $bookings->filter(function($value, $key) use($startingTimestamp, $endingTimestamp) {
-                return ($value->starting_timestamp >= $startingTimestamp || $value->starting_timestamp <= $endingTimestamp)
-                && ($value->ending_timestamp >= $startingTimestamp || $value->ending_timestamp <= $endingTimestamp);
-            })->count();
-        if (($bigFieldCount >= 1 || $normalFieldCount >= 4) || $bookingsSameTimeCount > 2) {
+        if ($bookings->count() >= 2) {
             self::showBookingCollisonError($validator);
         }
     }

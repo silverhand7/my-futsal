@@ -45,17 +45,17 @@ class Booking extends Model
         return $this->date->toISOString();
     }
 
-    public static function getBookedTime($date, $startingTime, $endingTime, $id = null)
+    public static function getBookedTime($fieldId, $date, $startingTime, $endingTime, $id = null)
     {
         return self::where(function($query) use ($startingTime, $endingTime){
             $query->whereRaw("'$startingTime' BETWEEN starting_timestamp and ending_timestamp");
             $query->orWhereRaw("'$endingTime' BETWEEN starting_timestamp and ending_timestamp");
         })
-        ->where(function($query) use ($startingTime, $endingTime) {
-            $query->where('starting_timestamp', '!=', $endingTime)
-            ->orWhere('ending_timestamp', $startingTime);
+        ->where(function($query) use ($startingTime) {
+            $query->where('ending_timestamp', '!=', $startingTime);
         })
-        ->where('date', $date)        
+        ->where('field_id', $fieldId)
+        ->where('date', $date)
         ->whereNotIn('status', ['rejected', 'canceled'])
         ->when(!empty($id), function ($query) use($id) {
             $query->where('id', '!=', $id);
