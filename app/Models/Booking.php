@@ -51,8 +51,11 @@ class Booking extends Model
             $query->whereRaw("'$startingTime' BETWEEN starting_timestamp and ending_timestamp");
             $query->orWhereRaw("'$endingTime' BETWEEN starting_timestamp and ending_timestamp");
         })
-        ->where('date', $date)
-        ->where('ending_timestamp', '!=', $startingTime)
+        ->where(function($query) use ($startingTime, $endingTime) {
+            $query->where('starting_timestamp', '!=', $endingTime)
+            ->orWhere('ending_timestamp', $startingTime);
+        })
+        ->where('date', $date)        
         ->whereNotIn('status', ['rejected', 'canceled'])
         ->when(!empty($id), function ($query) use($id) {
             $query->where('id', '!=', $id);

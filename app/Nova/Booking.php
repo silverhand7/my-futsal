@@ -60,7 +60,7 @@ class Booking extends Resource
                 })
                 ->rules(['required']),
             Text::make('Jam Mulai', 'starting_hour')
-                ->withMeta(['type' => 'time', 'step' => '900'])
+                ->withMeta(['type' => 'time'])
                 ->rules(['required']),
             Text::make('Jam Selesai', 'ending_hour')
                 ->withMeta(['type' => 'time'])
@@ -103,11 +103,28 @@ class Booking extends Resource
         $normalFieldCount = $bookings->filter(function($value, $key) {
             return $value->field->size == 'normal';
         })->count();
-        if ($bigFieldCount >= 1 || $normalFieldCount >= 2) {
-            $validator->errors()->add('date', 'Tanggal dan jam tersebut sudah terbooking!');
-            $validator->errors()->add('starting_hour', 'Tanggal dan jam tersebut sudah terbooking!');
-            $validator->errors()->add('ending_hour', 'Tanggal dan jam tersebut sudah terbooking!');
+
+        if ($request->field == 2) { // Lapangan besar
+            if ($bigFieldCount != 0 && $normalFieldCount != 0) {
+                self::showBookingCollisonError($validator);
+            }
         }
+
+        // Check if it has the same time when booking the field, if it has more than 2, shows error. 
+        $bookingsSameTimeCount = $bookings->filter(function($value, $key) use($startingTimestamp, $endingTimestamp) {
+                return ($value->starting_timestamp >= $startingTimestamp || $value->starting_timestamp <= $endingTimestamp)
+                && ($value->ending_timestamp >= $startingTimestamp || $value->ending_timestamp <= $endingTimestamp);
+            })->count();
+        if (($bigFieldCount >= 1 || $normalFieldCount >= 4) || $bookingsSameTimeCount > 2) {
+            self::showBookingCollisonError($validator);
+        }
+    }
+
+    private static function showBookingCollisonError($validator)
+    {
+        $validator->errors()->add('date', 'Tanggal dan jam tersebut sudah terbooking!');
+        $validator->errors()->add('starting_hour', 'Tanggal dan jam tersebut sudah terbooking!');
+        $validator->errors()->add('ending_hour', 'Tanggal dan jam tersebut sudah terbooking!');
     }
 
     /**
