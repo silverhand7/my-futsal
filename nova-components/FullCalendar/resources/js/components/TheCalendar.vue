@@ -31,7 +31,7 @@ export default {
 
                 selectConstraint: "businessHours",
                 initialView: 'timeGridWeek',
-                initialEvents: this.bookings,
+                events: this.bookings,
                 selectable: true,
                 editable: true,
                 select: this.handleDateSelect,

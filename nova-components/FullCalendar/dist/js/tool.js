@@ -15405,7 +15405,7 @@ __webpack_require__.r(__webpack_exports__);
         },
         selectConstraint: "businessHours",
         initialView: 'timeGridWeek',
-        initialEvents: this.bookings,
+        events: this.bookings,
         selectable: true,
         editable: true,
         select: this.handleDateSelect,

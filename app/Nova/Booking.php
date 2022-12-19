@@ -78,7 +78,7 @@ class Booking extends Resource
                 ->dependsOn(['duration', 'starting_hour'],
                 function (Text $field, NovaRequest $request, FormData $formData) {
                     if ($formData->duration !== null) {
-                        $field->value = Carbon::createFromFormat('H:i', $formData->starting_hour)->addHour($formData->duration)->format('H:i');
+                        $field->value = Carbon::parse($formData->starting_hour)->addHour($formData->duration)->format('H:i');
                     }
                 })
                 ->rules(['required'])
@@ -90,9 +90,11 @@ class Booking extends Resource
                     $field->value = Carbon::parse(Str::before($formData->date, 'T') . ' ' . $formData->starting_hour)->timestamp;
                 }),
             Hidden::make('ending_timestamp')
-                ->dependsOn(['date', 'ending_hour'],
-                function (Hidden $field, NovaRequest $request, FormData $formData) {
-                    $field->value = Carbon::parse(Str::before($formData->date, 'T') . ' ' . $formData->ending_hour)->timestamp;
+                ->dependsOn(['duration', 'starting_hour'],
+                function (Text $field, NovaRequest $request, FormData $formData) {
+                    if ($formData->duration !== null) {
+                        $field->value = Carbon::parse($formData->starting_hour)->addHour($formData->duration)->timestamp;
+                    }
                 }),
 
             Image::make('Bukti Pembayaran', 'proof_of_payment')->disk('public'),
@@ -117,8 +119,8 @@ class Booking extends Resource
         $field = $request->field;
 
         $bookings = ModelsBooking::getBookedTime($field, $date, $startingTimestamp, $endingTimestamp, $request->resourceId);
-
-        if ($bookings->count() >= 2) {
+        //dd($field, $startingTimestamp, $endingTimestamp, $bookings);
+        if ($bookings->count() >= 1) {
             self::showBookingCollisonError($validator);
         }
     }

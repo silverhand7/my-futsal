@@ -22,9 +22,14 @@ Route::get('/', function (NovaRequest $request) {
     ->get();
     $bookingsData = [];
     foreach ($bookings as $booking) {
+        $color = '#2761CE';
+        if ($booking->field_id == 2) {
+            $color = '#378006';
+        }
         $bookingsData[] = [
             'id' => $booking->id,
-            'title' => 'booking-' . $booking->id,
+            'title' => $booking->field->name,
+            'color' => $color,
             'start' => $booking->date->format('Y-m-d').'T'.$booking->starting_hour,
             'end' => $booking->date->format('Y-m-d').'T'.$booking->ending_hour
         ];
