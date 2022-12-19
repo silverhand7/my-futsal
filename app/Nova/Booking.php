@@ -127,6 +127,7 @@ class Booking extends Resource
 
     private static function showBookingCollisonError($validator)
     {
+        $validator->errors()->add('field', 'Lapangan sudah terbooking!');
         $validator->errors()->add('date', 'Tanggal dan jam tersebut sudah terbooking!');
         $validator->errors()->add('starting_hour', 'Tanggal dan jam tersebut sudah terbooking!');
         $validator->errors()->add('ending_hour', 'Tanggal dan jam tersebut sudah terbooking!');

@@ -65,7 +65,7 @@ class FieldPolicy
      */
     public function delete(User $user, Field $field)
     {
-        return $user->level != 'customer';
+        return false;
     }
 
     /**
