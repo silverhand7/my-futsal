@@ -28,7 +28,7 @@ class Booking extends Model
     ];
 
     protected $appends = [
-        'date_iso',
+        'date_iso', 'event_color',
     ];
 
     public function field()
@@ -44,6 +44,18 @@ class Booking extends Model
     public function getDateIsoAttribute()
     {
         return $this->date->toISOString();
+    }
+
+    public function getEventColorAttribute()
+    {
+        $color = '#2761CE';
+        if ($this->field_id == 2) {
+            $color = '#378006';
+        }
+        if ($this->field_id == 3) {
+            $color = '#FFA500';
+        }
+        return $color;
     }
 
     public static function getBookedTime($fieldId, $date, $startingTime, $endingTime, $id = null)

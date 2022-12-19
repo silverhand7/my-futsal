@@ -21,31 +21,25 @@ class DatabaseSeeder extends Seeder
         //     'email' => 'test@example.com',
         // ]);
 
-        \App\Models\Booking::insert([
+        \App\Models\Field::insert([
             [
-                'field_id' => 1,
-                'date' => '2022-12-17',
-                'starting_hour' => '10:00:00',
-                'starting_time' => '2022-12-17 10:00:00',
-                'ending_hour' => '13:00:00',
-                'ending_time' => '2022-12-17 13:00:00',
-                'note' => 1,
-                'proof_of_payment' => 1,
-                'status' => 'booked',
-                'customer_id' => 1
+                'name' => 'Lapangan Normal 1',
+                'size' => 'normal',
+                'hourly_rate' => 100000,
+                'note' => ''
             ],
             [
-                'field_id' => 1,
-                'date' => '2022-12-17',
-                'starting_hour' => '17:00:00',
-                'starting_time' => '2022-12-17 10:00:00',
-                'ending_hour' => '19:00:00',
-                'ending_time' => '2022-12-17 13:00:00',
-                'note' => 1,
-                'proof_of_payment' => 1,
-                'status' => 'booked',
-                'customer_id' => 1
-            ]
+                'name' => 'Lapangan Normal 2',
+                'size' => 'normal',
+                'hourly_rate' => 100000,
+                'note' => ''
+            ],
+            [
+                'name' => 'Lapangan Besar',
+                'size' => 'big',
+                'hourly_rate' => 200000,
+                'note' => ''
+            ],
         ]);
     }
 }
