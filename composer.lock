@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "0c355de2a464579d401fd4b19a61086d",
+    "content-hash": "d215eea6af023c7b122cb18ac5aaf61b",
     "packages": [
         {
             "name": "brick/math",
@@ -3689,7 +3689,7 @@
             "dist": {
                 "type": "path",
                 "url": "./nova-components/FullCalendar",
-                "reference": "417cf04130625481ee5a304b2be0f49a1026a5d7"
+                "reference": "2c53c4ce93798fb7646d6a0d12aed5fcf79045d6"
             },
             "require": {
                 "php": "^7.3|^8.0"
@@ -3718,6 +3718,51 @@
             "transport-options": {
                 "relative": true
             }
+        },
+        {
+            "name": "silverhand7/input-group",
+            "version": "1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/silverhand7/input-group.git",
+                "reference": "d03dff1952b83ba10f49b41575197bc603c85495"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/silverhand7/input-group/zipball/d03dff1952b83ba10f49b41575197bc603c85495",
+                "reference": "d03dff1952b83ba10f49b41575197bc603c85495",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^7.3|^8.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Silverhand7\\InputGroup\\FieldServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Silverhand7\\InputGroup\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "Laravel Nova Input Group Addon Package",
+            "keywords": [
+                "laravel",
+                "nova"
+            ],
+            "support": {
+                "issues": "https://github.com/silverhand7/input-group/issues",
+                "source": "https://github.com/silverhand7/input-group/tree/1.0.0"
+            },
+            "time": "2022-12-02T15:06:07+00:00"
         },
         {
             "name": "spatie/once",
@@ -8869,5 +8914,5 @@
         "php": "^8.0.2"
     },
     "platform-dev": [],
-    "plugin-api-version": "2.2.0"
+    "plugin-api-version": "2.1.0"
 }

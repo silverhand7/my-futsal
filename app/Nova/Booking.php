@@ -14,8 +14,10 @@ use Laravel\Nova\Fields\Hidden;
 use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Fields\Image;
+use Laravel\Nova\Fields\Number;
 use Laravel\Nova\Fields\Select;
 use Laravel\Nova\Http\Requests\NovaRequest;
+use Silverhand7\InputGroup\InputGroup;
 
 class Booking extends Resource
 {
@@ -61,10 +63,26 @@ class Booking extends Resource
                 ->rules(['required']),
             Text::make('Jam Mulai', 'starting_hour')
                 ->withMeta(['type' => 'time'])
-                ->rules(['required']),
+                ->rules(['required'])
+                ->default(function ($request) {
+                    return Carbon::now()->addHour(1)->startOfHour()->format('H:i');
+                }),
+
+            Number::make('Durasi', 'duration')
+                ->rules(['required'])
+                ->withMeta(['placeholder' => 'Durasi (jam)'])
+                ->onlyOnForms()
+                ->help('Jam'),
+
             Text::make('Jam Selesai', 'ending_hour')
-                ->withMeta(['type' => 'time'])
-                ->rules(['required']),
+                ->dependsOn(['duration', 'starting_hour'],
+                function (Text $field, NovaRequest $request, FormData $formData) {
+                    if ($formData->duration !== null) {
+                        $field->value = Carbon::createFromFormat('H:i', $formData->starting_hour)->addHour($formData->duration)->format('H:i');
+                    }
+                })
+                ->rules(['required'])
+                ->withMeta(['readonly' => true]),
 
             Hidden::make('starting_timestamp')
                 ->dependsOn(['date', 'starting_hour'],

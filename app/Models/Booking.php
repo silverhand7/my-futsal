@@ -14,6 +14,7 @@ class Booking extends Model
         'date',
         'starting_hour',
         'starting_timestamp',
+        'duration',
         'ending_hour',
         'ending_timestamp',
         'note',
