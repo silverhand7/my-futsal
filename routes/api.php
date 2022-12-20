@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\CustomerBookingController;
+use App\Http\Controllers\FieldController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -20,3 +21,4 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::get('get-bookings', [CustomerBookingController::class, 'getBookings']);
+Route::get('get-fields', [FieldController::class, 'get']);

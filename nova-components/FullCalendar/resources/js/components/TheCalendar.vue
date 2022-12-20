@@ -1,5 +1,19 @@
 <template>
     <div>
+        <div class="w-50">
+            <table class="table w-full mb-4">
+                <tr class="">
+                    <td class="px-2 py-1 font-bold">Lapangan</td>
+                    <td class="px-2 py-1 font-bold">Terbooking</td>
+                    <td class="px-2 py-1 font-bold">Belum Dikonfirmasi</td>
+                </tr>
+                <tr v-for="field in fields" :key="field.id">
+                    <td class="px-2 py-1 ">{{ field.name }}</td>
+                    <td class="px-2 py-1 "><div style="width:100px; height: 20px" :style="{'background-color': field.event_confirmed_color }"></div></td>
+                    <td class="px-2 py-1 "><div style="width:100px; height: 20px" :style="{'background-color': field.event_unconfirmed_color }"></div></td>
+                </tr>
+            </table>
+        </div>
         <FullCalendar :bookings="bookings" :options="calendarOptions"  />
     </div>
 </template>
@@ -19,8 +33,7 @@ export default {
     },
     data() {
         return {
-        calendarOptions:
-            {
+            calendarOptions: {
                 locale: idLocale,
                 plugins: [ timeGridPlugin ],
                 businessHours: {
@@ -35,8 +48,9 @@ export default {
                 selectable: true,
                 editable: true,
                 select: this.handleDateSelect,
-                eventClick: this.handleEventClick
+                eventClick: this.handleEventClick,
             },
+            fields: [],
         }
 
     },
@@ -44,10 +58,22 @@ export default {
         handleEventClick(selectInfo) {
             let id = selectInfo.event._def.publicId;
             window.location = './resources/bookings/' + id;
+        },
+        getFields() {
+            Nova.request().get('../api/get-fields').then(response => {
+                this.fields = response['data'];
+            })
         }
     },
-    created(){
-        //console.log(this.bookings, this.calendarOptions);
+    mounted(){
+        this.getFields();
     }
 }
 </script>
+
+<style>
+.w-50 {
+    width: 50%;
+}
+
+</style>

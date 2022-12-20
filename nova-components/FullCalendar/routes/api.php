@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Field;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -14,6 +15,6 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-// Route::get('/', function (Request $request) {
-//     //
-// });
+Route::get('/get-fields', function (Request $request) {
+    return Field::all();
+});

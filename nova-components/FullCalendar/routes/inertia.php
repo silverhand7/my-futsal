@@ -18,7 +18,7 @@ use Laravel\Nova\Http\Requests\NovaRequest;
 
 Route::get('/', function (NovaRequest $request) {
     $bookings = Booking::whereBetween('date', [Carbon::now()->startOfMonth()->format('Y-m-d'), Carbon::now()->endOfMonth()->format('Y-m-d')])
-    ->where('status', 'booked')
+    ->whereNotIn('status', ['rejected', 'canceled'])
     ->get();
     $bookingsData = [];
     foreach ($bookings as $booking) {

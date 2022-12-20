@@ -48,12 +48,12 @@ class Booking extends Model
 
     public function getEventColorAttribute()
     {
-        $color = '#2761CE';
+        $color = $this->status === 'booked' ? '#2761CE' : 'RGBA(39,97,206,0.46)';
         if ($this->field_id == 2) {
-            $color = '#378006';
+            $color = $this->status === 'booked' ? '#378006' : 'RGBA(55,128,6,0.55)';
         }
         if ($this->field_id == 3) {
-            $color = '#FFA500';
+            $color =  $this->status === 'booked' ? '#FFA500' : 'RGBA(255,165,0,0.51)';
         }
         return $color;
     }

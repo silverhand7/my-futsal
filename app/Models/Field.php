@@ -15,4 +15,32 @@ class Field extends Model
         'hourly_rate',
         'note'
     ];
+
+    protected $appends = [
+        'event_unconfirmed_color', 'event_confirmed_color',
+    ];
+
+    public function getEventUnconfirmedColorAttribute()
+    {
+        $color = 'RGBA(39,97,206,0.46)';
+        if ($this->id == 2) {
+            $color ='RGBA(55,128,6,0.55)';
+        }
+        if ($this->id == 3) {
+            $color = 'RGBA(255,165,0,0.51)';
+        }
+        return $color;
+    }
+
+    public function getEventConfirmedColorAttribute()
+    {
+        $color = '#2761CE';
+        if ($this->id == 2) {
+            $color = '#378006';
+        }
+        if ($this->id == 3) {
+            $color = '#FFA500';
+        }
+        return $color;
+    }
 }
