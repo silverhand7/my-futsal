@@ -4,6 +4,7 @@ namespace App\Nova\Dashboards;
 
 use Laravel\Nova\Cards\Help;
 use Laravel\Nova\Dashboards\Main as Dashboard;
+use Silverhand7\GraphicChart\GraphicChart;
 
 class Main extends Dashboard
 {
@@ -15,7 +16,8 @@ class Main extends Dashboard
     public function cards()
     {
         return [
-            new Help,
+            //new Help,
+            new GraphicChart
         ];
     }
 }
