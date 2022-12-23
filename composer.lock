@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "d215eea6af023c7b122cb18ac5aaf61b",
+    "content-hash": "fe774a79eedc3448c3ba717294cebe86",
     "packages": [
         {
             "name": "brick/math",
@@ -3682,6 +3682,42 @@
                 }
             ],
             "time": "2022-12-09T15:18:32+00:00"
+        },
+        {
+            "name": "silverhand7/dashboard-card",
+            "version": "dev-main",
+            "dist": {
+                "type": "path",
+                "url": "./nova-components/DashboardCard",
+                "reference": "fba8f9959a4e9ade4a159a01679acd512771e5ee"
+            },
+            "require": {
+                "php": "^7.3|^8.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Silverhand7\\DashboardCard\\CardServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Silverhand7\\DashboardCard\\": "src/"
+                }
+            },
+            "license": [
+                "MIT"
+            ],
+            "description": "A Laravel Nova card.",
+            "keywords": [
+                "laravel",
+                "nova"
+            ],
+            "transport-options": {
+                "relative": true
+            }
         },
         {
             "name": "silverhand7/full-calendar",
