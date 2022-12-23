@@ -7,7 +7,7 @@
             <h1>Lapangan</h1>
         </div>
         <div class="col-md-12">
-            <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Nulla enim tempora amet consectetur quo ratione error consequuntur suscipit et ipsam architecto perferendis, magni odio a incidunt deleniti nesciunt praesentium voluptate! Lorem ipsum, dolor sit amet consectetur adipisicing elit. Nulla enim tempora amet consectetur quo ratione error consequuntur.</p>
+            <p>Lapangan futsal kami terbuat dari material terbaik. Kami tidak menginginkan lapangan yang hanya indah dipandang, tetapi juga nyaman untuk bermain. Oleh karena itu, kami memastikan bahwa lapangan kami memiliki ukuran yang tepat sesuai dengan standar internasional. Ini membuat pemain dapat bergerak dengan leluasa dan menikmati permainan dengan maksimal. Selain itu, kami selalu merawat dan menjaga lapangan agar selalu nyaman untuk dimainkan sepanjang waktu. Kami juga memiliki fasilitas pencahayaan yang terbaik, sehingga pemain dapat bermain dengan nyaman pada siang maupun malam hari. Kami benar-benar percaya bahwa lapangan futsal yang nyaman adalah salah satu faktor yang paling penting dalam menikmati permainan sepak bola. Dan kami senang dapat menyediakan lapangan futsal terbaik bagi para pemain kami.</p>
         </div>
     </div>
     <div class="row">
