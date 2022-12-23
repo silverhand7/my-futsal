@@ -41,10 +41,13 @@ class CustomerBookingController extends Controller
         $bookings = Booking::getBookedTime($field, $date, $startingTimestamp, $endingTimestamp, $request->resourceId);
         //dd($field, $startingTimestamp, $endingTimestamp, $bookings);
         if ($bookings->count() >= 1) {
-            return redirect()->back()->with('error', 'Gagal membooking lapangan karena dijam dan tanggal tersebut lapangan sudah terbooking.');
+            return redirect()
+                ->back()
+                ->withInput($request->toArray())
+                ->with('error', 'Gagal membooking lapangan karena dijam dan tanggal tersebut lapangan sudah terbooking.');
         }
 
-        Booking::create([
+        $booking = Booking::create([
             'field_id' => $request->field_id,
             'date' => $date,
             'starting_hour' => $request->starting_hour,
@@ -56,6 +59,25 @@ class CustomerBookingController extends Controller
             'customer_id' => auth()->guard('customer')->user()->id,
         ]);
 
-        return redirect()->back()->with('success', 'Berhasil membuat booking, silahkan lengkapi pembayaran');
+        return redirect()->route('customer.booking.detail', $booking->id)->with('success', 'Berhasil membuat booking, silahkan lengkapi pembayaran');
+    }
+
+    public function bookingList()
+    {
+        return view('customer.booking-list', [
+            'bookings' => Booking::where('customer_id', auth()->guard('customer')->user()->id)->orderBy('id', 'desc')->get()
+        ]);
+    }
+
+    public function detail($id)
+    {
+        return view('customer.booking-detail', [
+            'booking' => Booking::findOrFail($id)
+        ]);
+    }
+
+    public function paymentAction(Request $request, $id)
+    {
+        dd($request->toArray(), $id);
     }
 }

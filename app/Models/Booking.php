@@ -47,6 +47,16 @@ class Booking extends Model
         return $this->date->toISOString();
     }
 
+    public function getBookingCodeAttribute()
+    {
+        return 'B-'.$this->id;
+    }
+
+    public function getBookingFeeAttribute()
+    {
+        return $this->field->hourly_rate * $this->duration;
+    }
+
     public function getEventColorAttribute()
     {
         $color = $this->status === 'booked' ? '#2761CE' : 'RGBA(39,97,206,0.46)';

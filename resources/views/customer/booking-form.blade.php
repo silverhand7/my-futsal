@@ -14,7 +14,7 @@
                             <select name="field_id" id="" class="form-control">
                                 <option value="">- Pilih Lapangan -</option>
                                 @foreach ($fields as $field)
-                                    <option value="{{ $field->id }}" {{ old('field_id') == $field->id ? 'selected' : '' }}>{{ $field->name }}</option>
+                                    <option value="{{ $field->id }}" {{ (old('field_id') == $field->id ? 'selected' : '') }}>{{ $field->name }}</option>
                                 @endforeach
                             </select>
                             @error('field_id')
@@ -44,7 +44,7 @@
                         <div class="form-group mb-4">
                             <label for="">Durasi</label>
                             <div class="input-group">
-                                <input type="number" class="form-control" name="duration">
+                                <input type="number" class="form-control" name="duration" value="{{ old('duration') }}">
                                 <span class="input-group-text" id="basic-addon2">Jam</span>
                             </div>
                             @error('duration')

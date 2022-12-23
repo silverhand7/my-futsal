@@ -24,4 +24,9 @@ class Customer extends Authenticatable
     protected $hidden = [
         'password',
     ];
+
+    public function getFullNameAttribute()
+    {
+        return ucwords($this->name);
+    }
 }
