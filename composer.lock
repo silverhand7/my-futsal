@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "d06d47d0a66f82cd05d5f48022f5f794",
+    "content-hash": "d215eea6af023c7b122cb18ac5aaf61b",
     "packages": [
         {
             "name": "brick/math",
@@ -3711,42 +3711,6 @@
                 "MIT"
             ],
             "description": "A Laravel Nova tool.",
-            "keywords": [
-                "laravel",
-                "nova"
-            ],
-            "transport-options": {
-                "relative": true
-            }
-        },
-        {
-            "name": "silverhand7/graphic-chart",
-            "version": "dev-main",
-            "dist": {
-                "type": "path",
-                "url": "./nova-components/GraphicChart",
-                "reference": "b2f5b4f59af55f41034ee8c84a025ef5f06361f9"
-            },
-            "require": {
-                "php": "^7.3|^8.0"
-            },
-            "type": "library",
-            "extra": {
-                "laravel": {
-                    "providers": [
-                        "Silverhand7\\GraphicChart\\CardServiceProvider"
-                    ]
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Silverhand7\\GraphicChart\\": "src/"
-                }
-            },
-            "license": [
-                "MIT"
-            ],
-            "description": "A Laravel Nova card.",
             "keywords": [
                 "laravel",
                 "nova"
