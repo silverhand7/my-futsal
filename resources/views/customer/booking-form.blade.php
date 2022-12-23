@@ -14,7 +14,7 @@
                             <select name="field_id" id="" class="form-control">
                                 <option value="">- Pilih Lapangan -</option>
                                 @foreach ($fields as $field)
-                                    <option value="{{ $field->id }}">{{ $field->name }}</option>
+                                    <option value="{{ $field->id }}" {{ old('field_id') == $field->id ? 'selected' : '' }}>{{ $field->name }}</option>
                                 @endforeach
                             </select>
                             @error('field_id')
@@ -25,7 +25,7 @@
                         </div>
                         <div class="form-group mb-3">
                             <label for="">Tanggal</label>
-                            <input type="date" class="form-control" name="date">
+                            <input type="date" class="form-control" name="date" value="{{ old('date', date('Y-m-d')) }}">
                             @error('date')
                                 <p class="text-danger fs-6" role="alert">
                                     {{ $message }}
@@ -34,7 +34,7 @@
                         </div>
                         <div class="form-group mb-3">
                             <label for="">Jam Mulai</label>
-                            <input type="time" name="starting_hour" class="form-control">
+                            <input type="time" name="starting_hour" class="form-control" value="{{ old('starting_hour', \Carbon\Carbon::now()->addHour()->startOfHour()->format('H:i')) }}">
                             @error('starting_hour')
                                 <p class="text-danger fs-6" role="alert">
                                     {{ $message }}

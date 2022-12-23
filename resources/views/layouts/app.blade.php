@@ -52,10 +52,16 @@
         </div>
     </nav>
     @if(session()->has('success'))
-    <div class="alert alert-success alert-dismissible fade show" role="alert">
-      <strong>Selamat!</strong> {{ session()->get('success') }}
-      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-    </div>
+      <div class="alert alert-success alert-dismissible fade show" role="alert">
+        <strong>Selamat!</strong> {{ session()->get('success') }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+      </div>
+    @endif
+    @if(session()->has('error'))
+      <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        <strong>Maaf!</strong> {{ session()->get('error') }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+      </div>
     @endif
     <div class="mb-4"></div>
     @yield('content')
