@@ -2,9 +2,11 @@
 
 namespace App\Nova\Dashboards;
 
+use App\Nova\Metrics\NewCustomers;
+use App\Nova\Metrics\Revenue;
+use App\Nova\Metrics\TotalBookings;
 use Laravel\Nova\Cards\Help;
 use Laravel\Nova\Dashboards\Main as Dashboard;
-use Silverhand7\GraphicChart\GraphicChart;
 
 class Main extends Dashboard
 {
@@ -16,8 +18,10 @@ class Main extends Dashboard
     public function cards()
     {
         return [
-            //new Help,
-            new GraphicChart
+            // new Help,
+            new NewCustomers,
+            new TotalBookings,
+            new Revenue,
         ];
     }
 }
