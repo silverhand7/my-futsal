@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -77,5 +78,25 @@ class Booking extends Model
             $query->where('id', '!=', $id);
         })
         ->get();
+    }
+
+    public static function getBookingsCalendar()
+    {
+        $bookings = self::whereBetween('date', [Carbon::now()->startOfMonth()->format('Y-m-d'), Carbon::now()->endOfMonth()->format('Y-m-d')])
+        ->whereNotIn('status', ['rejected', 'canceled'])
+        ->get();
+
+        $bookingsData = [];
+        foreach ($bookings as $booking) {
+            $bookingsData[] = [
+                'id' => $booking->id,
+                'title' => $booking->field->name,
+                'color' => $booking->event_color,
+                'start' => $booking->date->format('Y-m-d').'T'.$booking->starting_hour,
+                'end' => $booking->date->format('Y-m-d').'T'.$booking->ending_hour
+            ];
+        }
+
+        return $bookingsData;
     }
 }
