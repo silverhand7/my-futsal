@@ -78,6 +78,18 @@ class CustomerBookingController extends Controller
 
     public function paymentAction(Request $request, $id)
     {
-        dd($request->toArray(), $id);
+        $request->validate([
+            'proof_of_payment' => ['required'],
+        ]);
+
+        $fileName = $request->file('proof_of_payment')->store('proof_of_payment');
+
+        Booking::findOrFail($id)
+            ->update([
+                'proof_of_payment' => $fileName,
+                'status' => 'paid'
+            ]);
+
+        return redirect()->back()->with('success', 'Berhasil mengupload bukti pembayaran, kami akan segera memproses booking anda.');
     }
 }
