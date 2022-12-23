@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\DB;
 use Laravel\Nova\Http\Requests\NovaRequest;
 use Laravel\Nova\Metrics\Value;
 
-class Revenue extends Value
+class BookingRevenue extends Value
 {
     public $icon = 'currency-dollar';
     /**

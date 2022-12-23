@@ -3,7 +3,7 @@
 namespace App\Nova\Dashboards;
 
 use App\Nova\Metrics\NewCustomers;
-use App\Nova\Metrics\Revenue;
+use App\Nova\Metrics\BookingRevenue;
 use App\Nova\Metrics\TotalBookings;
 use Laravel\Nova\Cards\Help;
 use Laravel\Nova\Dashboards\Main as Dashboard;
@@ -21,7 +21,7 @@ class Main extends Dashboard
             // new Help,
             new NewCustomers,
             new TotalBookings,
-            new Revenue,
+            new BookingRevenue,
         ];
     }
 }
