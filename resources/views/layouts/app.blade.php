@@ -10,15 +10,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@300;400;700&display=swap" rel="stylesheet">
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@300;400;700&display=swap');
-        * {
-            font-family: "Nunito Sans", sans-serif !important
-        }
-        .right-menu {
-          left: auto!important;
-        }
-    </style>
+    @vite('resources/css/app.css')
 </head>
 <body style="background-color:#F1F5F9">
     <nav class="navbar navbar-expand-lg bg-white">
