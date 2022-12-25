@@ -35,3 +35,5 @@ Route::group(['as' => 'customer.'], function(){
         Route::post('booking/payment/{id}', [CustomerBookingController::class, 'paymentAction'])->name('booking.payment');
     });
 });
+
+Route::get('/booking-check', [CustomerBookingController::class, 'checkExpiredBooking']);

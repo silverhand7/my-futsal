@@ -85,5 +85,6 @@
     @yield('content')
 
     @vite('resources/js/app.js')
+    <script src="{{ asset('js/booking-checker.js') }}"></script>
 </body>
 </html>
