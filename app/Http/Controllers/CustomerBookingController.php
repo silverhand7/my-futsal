@@ -92,4 +92,14 @@ class CustomerBookingController extends Controller
 
         return redirect()->back()->with('success', 'Berhasil mengupload bukti pembayaran, kami akan segera memproses booking anda.');
     }
+
+    public function checkExpiredBooking()
+    {
+        Booking::where('created_at', '<', \Carbon\Carbon::now()->subHour(1))
+            ->where('status', 'pending')
+            ->update([
+                'status' => 'canceled'
+            ]);
+        return "Booking checked!";
+    }
 }

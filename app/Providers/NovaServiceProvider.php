@@ -20,6 +20,7 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
         parent::boot();
         Nova::withBreadcrumbs();
         Nova::style('custom-css', asset('css/custom.css'));
+        Nova::remoteScript(asset('js/booking-checker.js'));
         Nova::footer(function ($request) {
             return Blade::render('
                 <div class="mt-8 leading-normal text-xs text-gray-500 space-y-1">
