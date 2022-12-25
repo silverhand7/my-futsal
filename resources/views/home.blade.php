@@ -12,7 +12,7 @@
                     <div class="mb-4">
                         <a href="{{ route('customer.booking.form') }}" class="btn btn-primary">Booking Lapangan</a>
                     </div>
-                    <div id="calendar-app" class="fullcalendar-height"></div>
+                    <div id="calendar-app"></div>
                 </div>
             </div>
         </div>

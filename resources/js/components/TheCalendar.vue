@@ -1,5 +1,17 @@
 <template>
     <FullCalendar :bookings="bookings" :options="calendarOptions"  />
+    <table class="table mt-5">
+        <tr class="">
+            <th>Lapangan</th>
+            <th>Terbooking</th>
+            <th>Belum pasti</th>
+        </tr>
+        <tr v-for="field in fields" :key="field.id">
+            <td>{{ field.name }}</td>
+            <td><div style="width:5rem; height: 20px" :style="{'background-color': field.event_confirmed_color }"></div></td>
+            <td><div style="width:5rem; height: 20px" :style="{'background-color': field.event_unconfirmed_color }"></div></td>
+        </tr>
+    </table>
 </template>
 
 <script>
@@ -7,6 +19,7 @@ import FullCalendar from '@fullcalendar/vue3'
 import timeGridPlugin from '@fullcalendar/timegrid'
 import interactionPlugin from '@fullcalendar/interaction'
 import idLocale from '@fullcalendar/core/locales/id'
+import axios from 'axios'
 
 export default {
     props: {
@@ -17,6 +30,7 @@ export default {
     },
     data() {
         return {
+            fields: [],
             calendarOptions:
                 {
                     locale: idLocale,
@@ -45,18 +59,26 @@ export default {
                     selectable: true,
                     editable: true,
                     select: this.handleDateSelect,
-                    eventClick: this.handleEventClick,
+                    //eventClick: this.handleEventClick,
                     height: '100vh'
                 },
         }
 
     },
     methods: {
-        handleEventClick(selectInfo) {
-            let id = selectInfo.event._def.publicId;
-            window.location = './resources/bookings/' + id;
+        getFields() {
+            axios.get('./api/get-fields').then(response => {
+                this.fields = response['data'];
+            })
         }
+        // handleEventClick(selectInfo) {
+        //     let id = selectInfo.event._def.publicId;
+        //     window.location = './resources/bookings/' + id;
+        // }
     },
+    mounted(){
+        this.getFields();
+    }
 
 }
 </script>

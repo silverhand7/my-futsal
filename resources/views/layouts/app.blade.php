@@ -27,7 +27,7 @@
                 <a class="nav-link active" aria-current="page"  href="{{ url('/') }}">Home</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="{{ route('lapangan') }}">Lapangan</a>
+                <a class="nav-link" href="{{ route('lapangan') }}">Tentang Kami</a>
               </li>
             </ul>
             <div class="d-fex">
