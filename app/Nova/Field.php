@@ -35,6 +35,11 @@ class Field extends Resource
         'id', 'name', 'size'
     ];
 
+    public static function label()
+    {
+        return "Lapangan";
+    }
+
     /**
      * Get the fields displayed by the resource.
      *
