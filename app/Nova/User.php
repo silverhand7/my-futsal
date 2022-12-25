@@ -67,8 +67,8 @@ class User extends Resource
 
             Select::make('Level')
                 ->options([
-                    'customer' => 'Customer',
                     'admin' => 'Admin',
+                    'owner' => 'Owner',
                 ])
                 ->default('admin')
                 ->onlyOnForms()

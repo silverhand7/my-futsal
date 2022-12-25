@@ -15,7 +15,8 @@
         "laravel/sanctum": "^3.0",
         "laravel/tinker": "^2.7",
         "silverhand7/full-calendar": "*",
-        "silverhand7/input-group": "^1.0"
+        "silverhand7/input-group": "^1.0",
+        "silverhand7/dashboard-card": "*"
     },
     "require-dev": {
         "fakerphp/faker": "^1.9.1",
@@ -76,6 +77,10 @@
         {
             "type": "path",
             "url": "./nova-components/FullCalendar"
+        },
+        {
+            "type": "path",
+            "url": "./nova-components/DashboardCard"
         }
     ]
 }

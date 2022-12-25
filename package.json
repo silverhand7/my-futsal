@@ -4,7 +4,11 @@
         "dev": "vite",
         "build": "vite build",
         "build-full-calendar": "cd nova-components/FullCalendar && npm run dev",
-        "build-full-calendar-prod": "cd nova-components/FullCalendar && npm run prod"
+        "build-full-calendar-prod": "cd nova-components/FullCalendar && npm run prod",
+        "build-graphic-chart": "cd nova-components/GraphicChart && npm run dev",
+        "build-graphic-chart-prod": "cd nova-components/GraphicChart && npm run prod",
+        "build-dashboard-card": "cd nova-components/DashboardCard && npm run dev",
+        "build-dashboard-card-prod": "cd nova-components/DashboardCard && npm run prod"
     },
     "devDependencies": {
         "autoprefixer": "^10.4.13",
