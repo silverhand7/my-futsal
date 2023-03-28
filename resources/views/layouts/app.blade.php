@@ -10,15 +10,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@300;400;700&display=swap" rel="stylesheet">
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@300;400;700&display=swap');
-        * {
-            font-family: "Nunito Sans", sans-serif !important
-        }
-        .right-menu {
-          left: auto!important;
-        }
-    </style>
+    @vite('resources/css/app.css')
 </head>
 <body style="background-color:#F1F5F9">
     <nav class="navbar navbar-expand-lg bg-white">
@@ -32,10 +24,10 @@
           <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
               <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="#">Home</a>
+                <a class="nav-link active" aria-current="page"  href="{{ url('/') }}">Home</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="#">Lapangan</a>
+                <a class="nav-link" href="{{ route('lapangan') }}">Tentang Kami</a>
               </li>
             </ul>
             <div class="d-fex">
@@ -52,7 +44,7 @@
                     </a>
                     <ul class="dropdown-menu end-0 right-menu">
                       <li><a class="dropdown-item" href="{{ route('customer.booking.list') }}">Booking Saya</a></li>
-                      <li><a class="dropdown-item" href="#">Akun</a></li>
+                      <!-- <li><a class="dropdown-item" href="#">Akun</a></li> -->
                       <li><hr class="dropdown-divider"></li>
                       <li>
                         <form action="{{ route('customer.logout') }}" method="post">
@@ -84,6 +76,9 @@
     <div class="mb-4"></div>
     @yield('content')
 
+    <p class="text-center mt-5">© 2022 – My Stadium Futsal Bali</p>
+
     @vite('resources/js/app.js')
+    <script src="{{ asset('js/booking-checker.js') }}"></script>
 </body>
 </html>

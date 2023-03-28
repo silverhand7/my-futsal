@@ -1,13 +1,17 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import url('https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@300;400;700&display=swap');
+* {
+    font-family: "Nunito Sans", sans-serif !important
+}
+.right-menu {
+  left: auto!important;
+}
 
-@layer components {
-  .btn-primary {
-    @apply shadow rounded focus:outline-none ring-blue-200 focus:ring bg-blue-500 hover:bg-blue-400 active:bg-blue-600 text-white inline-flex items-center font-bold px-4 h-9 text-sm flex-shrink-0;
-  }
+.fullcalendar-height {
+  height: 100%;
+}
 
-  .btn-primary-outline {
-    @apply shadow rounded focus:outline-none ring-blue-200 focus:ring border border-blue-500 hover:border-blue-400 active:bg-blue-600 text-blue-500 hover:text-blue-400 inline-flex items-center font-bold px-4 h-9 text-sm flex-shrink-0;
+@media screen and (min-width: 0px) and (max-width: 500px) {
+  .fc-toolbar-title {
+    display: none;
   }
 }

@@ -6,7 +6,7 @@
         <div class="col-md-12">
             <h1>Jadwal Lapangan</h1>
         </div>
-        <div class="col-12">
+        <div class="col-md-12">
             <div class="card">
                 <div class="card-body">
                     <div class="mb-4">

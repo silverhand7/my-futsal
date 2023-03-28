@@ -18,6 +18,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
+Route::get('/lapangan', [HomeController::class, 'lapangan'])->name('lapangan');
 
 Route::group(['as' => 'customer.'], function(){
     Route::get('/login', [CustomerLoginController::class, 'loginForm'])->name('login.form');
@@ -35,3 +36,5 @@ Route::group(['as' => 'customer.'], function(){
         Route::post('booking/payment/{id}', [CustomerBookingController::class, 'paymentAction'])->name('booking.payment');
     });
 });
+
+Route::get('/booking-check', [CustomerBookingController::class, 'checkExpiredBooking']);

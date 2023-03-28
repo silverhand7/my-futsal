@@ -97,13 +97,13 @@ class Booking extends Resource
                     }
                 }),
 
-            Image::make('Bukti Pembayaran', 'proof_of_payment')->disk('public'),
+            Image::make('Bukti Pembayaran', 'proof_of_payment')->disk('public')->path('proof_of_payment'),
             Select::make('Status')
                 ->options([
                     'pending' => 'pending',
                     'paid' => 'paid',
-                    'rejected' => 'rejected',
                     'booked' => 'booked',
+                    'rejected' => 'rejected',
                     'canceled' => 'canceled',
                 ])
                 ->default('admin')
