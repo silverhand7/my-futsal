@@ -9,4 +9,4 @@ setInterval(() => {
             console.log(xhr.responseText);
         }
     }
-}, 60000); // every minute check expired booking
+}, 5000); // every 5 seconds check expired booking

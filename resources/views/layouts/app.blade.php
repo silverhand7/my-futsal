@@ -29,6 +29,9 @@
               <li class="nav-item">
                 <a class="nav-link" href="{{ route('lapangan') }}">Tentang Kami</a>
               </li>
+              <li class="nav-item">
+                <a class="nav-link" href="{{ route('event') }}">Event / Turnamen</a>
+              </li>
             </ul>
             <div class="d-fex">
                 @guest('customer')
