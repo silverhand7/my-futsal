@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Booking;
 use App\Models\Field;
+use App\Rules\BookingDateRule;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 
@@ -27,15 +28,11 @@ class CustomerBookingController extends Controller
     {
         $request->validate([
             'field_id' => ['required'],
-            'date' => ['required'],
+            'date' => ['required', new BookingDateRule()],
             'starting_hour' => ['required'],
             'duration' => ['required', 'numeric', 'max:5'],
         ]);
         $date = $request->date;
-        if ($date < Carbon::now()->toDateString()) {
-            return redirect()->back()->withInput($request->toArray())
-            ->with('error', 'Tidak dapat membooking lapangan ditanggal tersebut.');
-        }
 
         $ending = Carbon::parse($date . ' ' . $request->starting_hour)->addHour($request->duration);
 
