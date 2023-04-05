@@ -19,7 +19,7 @@ class CustomerBookingController extends Controller
     public function form()
     {
         return view('customer.booking-form', [
-            'fields' => Field::all(),
+            'fields' => Field::where('name', '!=', 'Lapangan Tidak Tersedia')->get(),
         ]);
     }
 
@@ -31,20 +31,24 @@ class CustomerBookingController extends Controller
             'starting_hour' => ['required'],
             'duration' => ['required', 'numeric', 'max:5'],
         ]);
-        $ending = Carbon::parse($request->starting_hour)->addHour($request->duration);
-
-        $startingTimestamp = Carbon::parse($request->starting_hour)->timestamp;
-        $endingTimestamp = $ending->timestamp;
         $date = $request->date;
+        if ($date < Carbon::now()->toDateString()) {
+            return redirect()->back()->withInput($request->toArray())
+            ->with('error', 'Tidak dapat membooking lapangan ditanggal tersebut.');
+        }
+
+        $ending = Carbon::parse($date . ' ' . $request->starting_hour)->addHour($request->duration);
+
+        $startingTimestamp = Carbon::parse($date . ' ' .$request->starting_hour)->timestamp;
+        $endingTimestamp = $ending->timestamp;
         $field = $request->field_id;
 
-        $bookings = Booking::getBookedTime($field, $date, $startingTimestamp, $endingTimestamp, $request->resourceId);
-        //dd($field, $startingTimestamp, $endingTimestamp, $bookings);
+        $bookings = Booking::getBookedTime($field, $date, $startingTimestamp, $endingTimestamp);
         if ($bookings->count() >= 1) {
             return redirect()
                 ->back()
                 ->withInput($request->toArray())
-                ->with('error', 'Gagal membooking lapangan karena dijam dan tanggal tersebut lapangan sudah terbooking.');
+                ->with('error', 'Gagal membooking lapangan karena dijam dan tanggal tersebut lapangan sudah terbooking atau tidak tersedia.');
         }
 
         $booking = Booking::create([
@@ -95,7 +99,7 @@ class CustomerBookingController extends Controller
 
     public function checkExpiredBooking()
     {
-        Booking::where('created_at', '<', \Carbon\Carbon::now()->subHour(1))
+        Booking::where('created_at', '<', \Carbon\Carbon::now()->subMinutes(15))
             ->where('status', 'pending')
             ->update([
                 'status' => 'canceled'

@@ -4,6 +4,7 @@ namespace App\Nova;
 
 use App\Http\Requests\BookingRequest;
 use App\Models\Booking as ModelsBooking;
+use App\Nova\Lenses\BookingLedger;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
@@ -98,6 +99,7 @@ class Booking extends Resource
                 }),
 
             Image::make('Bukti Pembayaran', 'proof_of_payment')->disk('public')->path('proof_of_payment'),
+
             Select::make('Status')
                 ->options([
                     'pending' => 'pending',
@@ -120,6 +122,7 @@ class Booking extends Resource
 
         $bookings = ModelsBooking::getBookedTime($field, $date, $startingTimestamp, $endingTimestamp, $request->resourceId);
         //dd($field, $startingTimestamp, $endingTimestamp, $bookings);
+
         if ($bookings->count() >= 1) {
             self::showBookingCollisonError($validator);
         }
@@ -163,7 +166,11 @@ class Booking extends Resource
      */
     public function lenses(NovaRequest $request)
     {
-        return [];
+        return [
+            BookingLedger::make()->canSee(function($request) {
+                return $request->user()->level === 'owner';
+            }),
+        ];
     }
 
     /**
@@ -175,5 +182,15 @@ class Booking extends Resource
     public function actions(NovaRequest $request)
     {
         return [];
+    }
+
+    public static function indexQuery(NovaRequest $request, $query)
+    {
+        return $query->selectRaw('bookings.*, fields.name')->join('fields', 'fields.id', '=', 'bookings.field_id')->where('name', '!=', 'Lapangan Tidak Tersedia');
+    }
+
+    public static function relatableFields(NovaRequest $request, $query)
+    {
+        return $query->where('name', '!=', 'Lapangan Tidak Tersedia');
     }
 }

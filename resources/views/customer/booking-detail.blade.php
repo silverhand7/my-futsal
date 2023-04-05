@@ -8,7 +8,7 @@
                 <h1>Informasi Pembayaran</h1>
                 <div class="card">
                     <div class="card-body">
-                        <p>Silahkan selesaikan proses booking dengan melengkapi pembayaran. Jika anda tidak melakukan pembayaran dalam satu jam, maka pesanan anda akan otomatis dibatalkan.</p>
+                        <p>Silahkan selesaikan proses booking dengan melengkapi pembayaran. Jika anda tidak melakukan pembayaran dalam <b>15 menit</b>, maka pesanan anda akan otomatis dibatalkan.</p>
                         <form action="{{ route('customer.booking.payment', $booking->id) }}" method="post" enctype="multipart/form-data">
                             @csrf
                             <table class="table table-borderless">

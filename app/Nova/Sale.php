@@ -2,11 +2,9 @@
 
 namespace App\Nova;
 
+use App\Nova\Lenses\SalesLedger;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\BelongsTo;
-use Laravel\Nova\Fields\Field;
-use Laravel\Nova\Fields\FormData;
-use Laravel\Nova\Fields\Heading;
 use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\Number;
 use Laravel\Nova\Fields\Text;
@@ -14,6 +12,10 @@ use Laravel\Nova\Http\Requests\NovaRequest;
 
 class Sale extends Resource
 {
+    public static function label()
+    {
+        return "Penjualan";
+    }
     /**
      * The model the resource corresponds to.
      *
@@ -97,7 +99,11 @@ class Sale extends Resource
      */
     public function lenses(NovaRequest $request)
     {
-        return [];
+        return [
+            SalesLedger::make()->canSee(function($request) {
+                return $request->user()->level === 'owner';
+            }),
+        ];
     }
 
     /**

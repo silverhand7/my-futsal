@@ -106,4 +106,10 @@ class Field extends Resource
     {
         return [];
     }
+
+    public static function indexQuery(NovaRequest $request, $query)
+    {
+        return $query->where('name', '!=', 'Lapangan Tidak');
+    }
+
 }

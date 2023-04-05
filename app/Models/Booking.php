@@ -66,6 +66,9 @@ class Booking extends Model
         if ($this->field_id == 3) {
             $color =  $this->status === 'booked' ? '#FFA500' : 'RGBA(255,165,0,0.51)';
         }
+        if ($this->field_id == 4) {
+            $color =  $this->status === 'booked' ? 'rgba(84, 84, 84, 0.8)' : 'rgba(84, 84, 84, 0.8)';
+        }
         return $color;
     }
 
@@ -79,8 +82,8 @@ class Booking extends Model
             $query->where('ending_timestamp', '!=', $startingTime)
             ->where('starting_timestamp', '!=', $endingTime);
         })
-        ->when($fieldId != 3, function($query) use($fieldId){
-            $query->whereIn('field_id', [$fieldId, 3]);
+        ->when($fieldId != 3 || $fieldId != 4, function($query) use($fieldId){
+            $query->whereIn('field_id', [$fieldId, 3, 4]);
         })
         ->where('date', $date)
         ->whereNotIn('status', ['rejected', 'canceled'])
@@ -100,7 +103,7 @@ class Booking extends Model
         foreach ($bookings as $booking) {
             $bookingsData[] = [
                 'id' => $booking->id,
-                'title' => $booking->field->name,
+                'title' => ($booking->field->name != 'Lapangan Tidak Tersedia') ? $booking->field->name : $booking->field->name . ' – ' . $booking->note,
                 'color' => $booking->event_color,
                 'start' => $booking->date->format('Y-m-d').'T'.$booking->starting_hour,
                 'end' => $booking->date->format('Y-m-d').'T'.$booking->ending_hour

@@ -29,6 +29,9 @@ class Field extends Model
         if ($this->id == 3) {
             $color = 'RGBA(255,165,0,0.51)';
         }
+        if ($this->id == 4) {
+            $color = 'rgba(84, 84, 84, 0.8)';
+        }
         return $color;
     }
 
@@ -40,6 +43,9 @@ class Field extends Model
         }
         if ($this->id == 3) {
             $color = '#FFA500';
+        }
+        if ($this->id == 4) {
+            $color = 'rgba(84, 84, 84, 0.8)';
         }
         return $color;
     }

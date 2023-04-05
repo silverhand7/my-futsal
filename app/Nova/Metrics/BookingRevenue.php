@@ -17,9 +17,8 @@ class BookingRevenue extends Value
      * @return mixed
      */
     public function calculate(NovaRequest $request)
-    {        
-        return $this->sum($request, Booking::join('fields', 'fields.id', '=', 'bookings.field_id')->where('status', 'booked'), DB::raw('duration * hourly_rate'))->prefix('Rp')->format('0,0');
-
+    {
+        return $this->sum($request, Booking::join('fields', 'fields.id', '=', 'bookings.field_id')->where('status', 'booked')->where('field_id', '!=', 4), DB::raw('duration * hourly_rate'))->prefix('Rp')->format('0,0');
     }
 
     /**

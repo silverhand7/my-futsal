@@ -26,7 +26,7 @@ class Sale extends Model
         parent::boot();
 
         static::creating(function ($sale) {
-            $sale->user_id = auth()->user()->id;
+            $sale->user_id = auth()->user()->id ?? 1;
         });
     }
 

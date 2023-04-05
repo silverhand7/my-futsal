@@ -24,7 +24,7 @@ Route::get('/', function (NovaRequest $request) {
     foreach ($bookings as $booking) {
         $bookingsData[] = [
             'id' => $booking->id,
-            'title' => $booking->field->name,
+            'title' => ($booking->field->name != 'Lapangan Tidak Tersedia') ? $booking->field->name : $booking->field->name . ' – ' . $booking->note,
             'color' => $booking->event_color,
             'start' => $booking->date->format('Y-m-d').'T'.$booking->starting_hour,
             'end' => $booking->date->format('Y-m-d').'T'.$booking->ending_hour

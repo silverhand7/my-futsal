@@ -60,7 +60,7 @@ export default {
                     editable: true,
                     select: this.handleDateSelect,
                     //eventClick: this.handleEventClick,
-                    height: '100vh'
+                    height: '100vh',
                 },
         }
 
@@ -71,10 +71,6 @@ export default {
                 this.fields = response['data'];
             })
         }
-        // handleEventClick(selectInfo) {
-        //     let id = selectInfo.event._def.publicId;
-        //     window.location = './resources/bookings/' + id;
-        // }
     },
     mounted(){
         this.getFields();

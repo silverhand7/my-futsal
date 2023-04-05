@@ -2,13 +2,14 @@
 
 namespace App\Nova\Metrics;
 
-use App\Models\Booking;
+use App\Models\Sale;
+use Illuminate\Support\Facades\DB;
 use Laravel\Nova\Http\Requests\NovaRequest;
 use Laravel\Nova\Metrics\Value;
 
-class TotalBookings extends Value
+class SaleRevenue extends Value
 {
-    public $icon = 'collection';
+    public $name = 'Pendapatan Penjualan';
     /**
      * Calculate the value of the metric.
      *
@@ -17,7 +18,7 @@ class TotalBookings extends Value
      */
     public function calculate(NovaRequest $request)
     {
-        return $this->count($request, Booking::where('field_id', '!=', 4));
+        return $this->sum($request, Sale::join('products', 'products.id', '=', 'sales.product_id'), DB::raw('qty * price'))->prefix('Rp')->format('0,0');
     }
 
     /**
