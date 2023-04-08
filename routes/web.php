@@ -31,8 +31,8 @@ Route::group(['as' => 'customer.'], function(){
     Route::post('/register', [CustomerRegisterController::class, 'action'])->name('register.action');
 
     Route::middleware(['auth:customer'])->group(function(){
-        Route::get('booking', [CustomerBookingController::class, 'form'])->name('booking.form');
         Route::post('booking', [CustomerBookingController::class, 'store'])->name('booking.store');
+        Route::get('booking', [CustomerBookingController::class, 'form'])->name('booking.form');
         Route::get('booking-saya', [CustomerBookingController::class, 'bookingList'])->name('booking.list');
         Route::get('booking/detail/{id}', [CustomerBookingController::class, 'detail'])->name('booking.detail');
         Route::post('booking/payment/{id}', [CustomerBookingController::class, 'paymentAction'])->name('booking.payment');

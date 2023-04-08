@@ -70,7 +70,7 @@ export default {
             axios.get('./api/get-fields').then(response => {
                 this.fields = response['data'];
             })
-        }
+        },
     },
     mounted(){
         this.getFields();

@@ -21,4 +21,4 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::get('get-bookings', [CustomerBookingController::class, 'getBookings']);
-Route::get('get-fields', [FieldController::class, 'get']);
+Route::get('get-fields/{date?}', [FieldController::class, 'get']);

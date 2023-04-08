@@ -12,7 +12,8 @@
                     <div class="mb-4">
                         <a href="{{ route('customer.booking.form') }}" class="btn btn-primary">Booking Lapangan</a>
                     </div>
-                    <div id="calendar-app"></div>
+                    {{-- <div id="calendar-app"></div> --}}
+                    <div id="booking-schedule-app"></div>
                 </div>
             </div>
         </div>

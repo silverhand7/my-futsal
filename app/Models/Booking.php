@@ -82,7 +82,7 @@ class Booking extends Model
             $query->where('ending_timestamp', '!=', $startingTime)
             ->where('starting_timestamp', '!=', $endingTime);
         })
-        ->when($fieldId != 3 || $fieldId != 4, function($query) use($fieldId){
+        ->when(($fieldId != 3 && $fieldId != 4), function($query) use($fieldId){
             $query->whereIn('field_id', [$fieldId, 3, 4]);
         })
         ->where('date', $date)

@@ -20,6 +20,11 @@ class Field extends Model
         'event_unconfirmed_color', 'event_confirmed_color',
     ];
 
+    public function bookings()
+    {
+        return $this->hasMany(Booking::class);
+    }
+
     public function getEventUnconfirmedColorAttribute()
     {
         $color = 'RGBA(39,97,206,0.46)';

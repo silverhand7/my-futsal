@@ -41,11 +41,12 @@ class CustomerBookingController extends Controller
         $field = $request->field_id;
 
         $bookings = Booking::getBookedTime($field, $date, $startingTimestamp, $endingTimestamp);
+
         if ($bookings->count() >= 1) {
-            return redirect()
-                ->back()
-                ->withInput($request->toArray())
-                ->with('error', 'Gagal membooking lapangan karena dijam dan tanggal tersebut lapangan sudah terbooking atau tidak tersedia.');
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Gagal membooking lapangan karena dijam dan tanggal tersebut lapangan sudah terbooking atau tidak tersedia.',
+            ], 422);
         }
 
         $booking = Booking::create([
@@ -60,7 +61,12 @@ class CustomerBookingController extends Controller
             'customer_id' => auth()->guard('customer')->user()->id,
         ]);
 
-        return redirect()->route('customer.booking.detail', $booking->id)->with('success', 'Berhasil membuat booking, silahkan lengkapi pembayaran');
+        return [
+            'data' => $booking,
+            'path' => route('customer.booking.detail', $booking->id),
+        ];
+
+        // return redirect()->route('customer.booking.detail', $booking->id)->with('success', 'Berhasil membuat booking, silahkan lengkapi pembayaran');
     }
 
     public function bookingList()
