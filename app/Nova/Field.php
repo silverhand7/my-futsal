@@ -109,7 +109,7 @@ class Field extends Resource
 
     public static function indexQuery(NovaRequest $request, $query)
     {
-        return $query->where('name', '!=', 'Lapangan Tidak');
+        return $query->where('name', '!=', 'Lapangan Tidak Tersedia');
     }
 
 }
