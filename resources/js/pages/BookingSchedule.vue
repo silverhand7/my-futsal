@@ -15,6 +15,7 @@
                                 (selectedHours.includes(hour) && selectedField.id == field.id
                                 || bookedHours[field.id].includes(hour)) ? 'booking-hour-selected' : ''
                             ]"
+                            v-on:click="handleClickHour(field, hour, index)"
                             v-on:mousedown="handleMouseDown"
                             v-on:mouseup="handleMouseUp"
                             v-on:mousemove="handleMouseMove(field, hour, index)"
@@ -28,126 +29,140 @@
     </div>
   </template>
 
-  <script>
-import axios from 'axios';
+    <script>
+    import axios from 'axios';
 
-  export default {
-    data() {
-      return {
-        bookings: [],
-        fields: [],
-        bookedHours: [],
-        selectedField: '',
-        selectedHours: [],
-        isDragging: false,
-        date: new Date().toISOString().substr(0, 10),
-        hours: this.getHours()
-      }
-    },
-    created() {
-        this.getFields();
-    },
-    computed() {
-
-    },
-    methods: {
-        handleMouseDown() {
-            this.isDragging = true;
-        },
-        handleMouseUp() {
-            this.isDragging = false;
-            if (this.selectedHours.length > 1) {
-                if (window.confirm(`Apakah anda yakin akan membooking ${this.selectedField.name} pada tanggal ${this.date} pada jam ${this.selectedHours[0]} sampai ${this.selectedHours[this.selectedHours.length - 1]}`)) {
-                    axios.post('/booking', {
-                        field_id: this.selectedField.id,
-                        date: this.date,
-                        starting_hour: this.selectedHours[0],
-                        duration: this.selectedHours.length - 1
-                    }).then(response => {
-                        window.location = response.data.path;
-                    }).catch(error => {
-                        alert(error.response.data.message);
-                        window.location.reload();
-                    })
-                } else {
-                    this.selectedHours = [];
-                }
+    export default {
+        data() {
+            return {
+                bookings: [],
+                fields: [],
+                bookedHours: [],
+                selectedField: '',
+                selectedHours: [],
+                isDragging: false,
+                date: new Date().toISOString().substr(0, 10),
+                hours: this.getHours()
             }
         },
-        handleMouseMove(fieldId, hour, index) {
-            if(this.isDragging) {
+        created() {
+            this.getFields();
+        },
+        computed() {
+
+        },
+        methods: {
+            handleMouseDown() {
+                this.isDragging = true;
+            },
+
+            handleMouseUp() {
+                this.isDragging = false;
+                setTimeout(() => {
+                    const startHour = this.selectedHours[0].split(' - ', 1)[0];
+                    const endHour = this.selectedHours[this.selectedHours.length - 1].split(' - ')[1];
+                    if (window.confirm(`Apakah anda yakin akan membooking ${this.selectedField.name} pada tanggal ${this.date} pada jam ${startHour} sampai ${endHour}`)) {
+                        axios.post('/booking', {
+                            field_id: this.selectedField.id,
+                            date: this.date,
+                            starting_hour: this.selectedHours[0],
+                            duration: this.selectedHours.length
+                        }).then(response => {
+                            window.location = response.data.path;
+                        }).catch(error => {
+                            alert(error.response.data.message);
+                            window.location.reload();
+                        })
+                    } else {
+                        this.selectedHours = [];
+                    }
+                }, 100);
+            },
+            handleMouseMove(fieldId, hour, index) {
+                if(this.isDragging) {
+                    this.selectField(fieldId);
+                    this.selectHour(hour);
+                }
+            },
+            handleClickHour(fieldId, hour, index) {
                 this.selectField(fieldId);
                 this.selectHour(hour);
-            }
-        },
-        selectHour(hour) {
-            if (this.selectedHours.find(el => hour == el) === undefined) {
-                this.selectedHours.push(hour)
-            } else {
+                // this.handleMouseUp();
+            },
+            selectHour(hour) {
+                if (this.selectedHours.find(el => hour == el) === undefined) {
+                    this.selectedHours.push(hour)
+                } else {
 
-            }
-            // console.log(this.selectedHours);
-        },
-
-        selectField(field) {
-            this.selectedField = field;
-        },
-
-        checkBookingsHour(field) {
-            let data = [];
-            for (let i = 0; i < field.bookings.length; i++) {
-                let diff = (field.bookings[i].ending_timestamp - field.bookings[i].starting_timestamp) / 60 / 60;
-                let starting_hour = field.bookings[i].starting_hour.slice(0, -3);
-                let starting_hour_index = this.getHours().indexOf(starting_hour);
-
-                for (let j = 0; j <= diff; j++) {
-                    data.push(this.getHours()[starting_hour_index + j]);
                 }
-            }
+                // console.log(this.selectedHours);
+            },
 
-            return data;
-        },
+            selectField(field) {
+                this.selectedField = field;
+            },
 
-        changeDate() {
-            this.getFields(this.date);
-        },
+            checkBookingsHour(field) {
+                let data = [];
+                for (let i = 0; i < field.bookings.length; i++) {
+                    let diff = (field.bookings[i].ending_timestamp - field.bookings[i].starting_timestamp) / 60 / 60;
+                    let starting_hour = field.bookings[i].starting_hour.slice(0, -3);
+                    let starting_hour_index = this.getHours().indexOf(starting_hour + ' - ' + this.hourAddition(starting_hour));
+                    console.log(starting_hour_index, diff);
+                    for (let j = 0; j < diff; j++) {
+                        let hour = this.getHours()[starting_hour_index + j];
+                        data.push(hour);
+                    }
+                }
 
-        async getFields(date = null) {
-            this.fields = [];
-            this.bookedHours = [];
-            await axios.get('./api/get-fields/'+date).then(response => {
-                this.fields = response['data'];
+                return data;
+            },
 
-                this.fields.forEach(field => {
-                    this.bookedHours[field.id] = this.checkBookingsHour(field);
+            hourAddition(hour) {
+                let number = parseInt(hour.slice(0, 2)) + 1;
+
+                return number.toString().length == 1 ? `0${number}:00` : `${number}:00`;
+            },
+
+            changeDate() {
+                this.getFields(this.date);
+            },
+
+            async getFields(date = null) {
+                this.fields = [];
+                this.bookedHours = [];
+                await axios.get('./api/get-fields/'+date).then(response => {
+                    this.fields = response['data'];
+
+                    this.fields.forEach(field => {
+                        this.bookedHours[field.id] = this.checkBookingsHour(field);
+                    })
                 })
-            })
-            console.log(this.fields);
-            // console.log(this.bookedHours);
-        },
+                // console.log(this.fields);
+                console.log(this.bookedHours);
+            },
 
-        getHours() {
-            return [
-                '08:00',
-                '09:00',
-                '10:00',
-                '11:00',
-                '12:00',
-                '13:00',
-                '14:00',
-                '15:00',
-                '16:00',
-                '17:00',
-                '18:00',
-                '19:00',
-                '21:00',
-                '22:00',
-                '23:00',
-                '00:00',
-            ]
-        },
+            getHours() {
+                return [
+                    '08:00 - 09:00',
+                    '09:00 - 10:00',
+                    '10:00 - 11:00',
+                    '11:00 - 12:00',
+                    '12:00 - 13:00',
+                    '13:00 - 14:00',
+                    '14:00 - 15:00',
+                    '15:00 - 16:00',
+                    '16:00 - 17:00',
+                    '17:00 - 18:00',
+                    '18:00 - 19:00',
+                    '19:00 - 20:00',
+                    '21:00 - 21:00',
+                    '22:00 - 22:00',
+                    '23:00 - 00:00',
+                ]
+            },
+        }
     }
-  }
   </script>
 
   <style>

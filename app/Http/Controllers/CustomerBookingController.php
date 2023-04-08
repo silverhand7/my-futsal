@@ -32,11 +32,13 @@ class CustomerBookingController extends Controller
             'starting_hour' => ['required'],
             'duration' => ['required', 'numeric', 'max:5'],
         ]);
+
         $date = $request->date;
+        $startingHour = explode(' - ', $request->starting_hour)[0];
 
-        $ending = Carbon::parse($date . ' ' . $request->starting_hour)->addHour($request->duration);
+        $ending = Carbon::parse($date . ' ' . $startingHour)->addHour($request->duration);
 
-        $startingTimestamp = Carbon::parse($date . ' ' .$request->starting_hour)->timestamp;
+        $startingTimestamp = Carbon::parse($date . ' ' .$startingHour)->timestamp;
         $endingTimestamp = $ending->timestamp;
         $field = $request->field_id;
 
@@ -52,7 +54,7 @@ class CustomerBookingController extends Controller
         $booking = Booking::create([
             'field_id' => $request->field_id,
             'date' => $date,
-            'starting_hour' => $request->starting_hour,
+            'starting_hour' => $startingHour,
             'starting_timestamp' => $startingTimestamp,
             'ending_hour' => $ending->format('H:i'),
             'ending_timestamp' => $endingTimestamp,
