@@ -1,5 +1,4 @@
 <template>
-
     <div class="booking-container">
         <div class="row mb-3">
             <div class="col-md-6">
@@ -7,7 +6,11 @@
             </div>
         </div>
         <div class="row">
-            <div v-for="field in fields" :key="field.id" class="col-4">
+            <div
+                v-if="isFieldAvailable == true"
+                v-for="field in fields" :key="field.id"
+                class="col-4"
+            >
                 <div v-if="field.id != 4">
                     <h2>{{ field.name }}</h2>
                     <div v-for="hour, index in hours" :key="index">
@@ -24,6 +27,9 @@
                         </div>
                     </div>
                 </div>
+            </div>
+            <div v-else>
+                <p>{{ fieldMessage }}</p>
             </div>
         </div>
     </div>
@@ -42,14 +48,31 @@
                 selectedHours: [],
                 isDragging: false,
                 date: new Date().toISOString().substr(0, 10),
-                hours: this.getHours()
+                hours: this.getHours(),
             }
         },
         created() {
             this.getFields();
         },
-        computed() {
-
+        computed: {
+            isFieldAvailable() {
+                let status;
+                this.fields.forEach(field => {
+                    if (field.id == 4) {
+                        if (field.bookings.length == 0) {
+                            status = true;
+                        } else {
+                            status = false;
+                        }
+                    }
+                });
+                return status;
+            },
+            fieldMessage() {
+                if (this.isFieldAvailable == false) {
+                    return this.fields.find(field => field.id == 4).bookings[0].note;
+                }
+            },
         },
         methods: {
             handleMouseDown() {
@@ -108,7 +131,7 @@
                     let diff = (field.bookings[i].ending_timestamp - field.bookings[i].starting_timestamp) / 60 / 60;
                     let starting_hour = field.bookings[i].starting_hour.slice(0, -3);
                     let starting_hour_index = this.getHours().indexOf(starting_hour + ' - ' + this.hourAddition(starting_hour));
-                    console.log(starting_hour_index, diff);
+
                     for (let j = 0; j < diff; j++) {
                         let hour = this.getHours()[starting_hour_index + j];
                         data.push(hour);
@@ -138,8 +161,8 @@
                         this.bookedHours[field.id] = this.checkBookingsHour(field);
                     })
                 })
-                // console.log(this.fields);
-                console.log(this.bookedHours);
+                console.log(this.fields);
+                // console.log(this.bookedHours);
             },
 
             getHours() {
@@ -174,15 +197,15 @@
     width: 100%;
     padding: 10px;
     background: white;
-    border: 1px solid #0d6efd;
+    border: 1px solid #6c757d;
     margin-bottom:10px;
     border-radius: 5px;
     cursor: pointer;
   }
 
   .booking-hour-selected {
-    background: #0d6efd;
-    border: 1px solid #0d6efd;
+    background: #6c757d;
+    border: 1px solid #6c757d;
     color:white
   }
   </style>
