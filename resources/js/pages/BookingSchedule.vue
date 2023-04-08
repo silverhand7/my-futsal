@@ -12,7 +12,7 @@
                 class="col-4"
             >
                 <div v-if="field.id != 4">
-                    <h2>{{ field.name }}</h2>
+                    <h2 class="field-name">{{ field.name }}</h2>
                     <div v-for="hour, index in hours" :key="index">
                         <div :class="`booking-hour ` + [
                                 (selectedHours.includes(hour) && selectedField.id == field.id
@@ -207,5 +207,11 @@
     background: #6c757d;
     border: 1px solid #6c757d;
     color:white
+  }
+
+  @media screen and (max-width: 480px) {
+    .field-name {
+        font-size: 20px;
+    }
   }
   </style>
