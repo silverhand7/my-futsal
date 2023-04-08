@@ -36,6 +36,15 @@ class CustomerBookingController extends Controller
         $date = $request->date;
         $startingHour = explode(' - ', $request->starting_hour)[0];
 
+        if ($date == Carbon::now()->toDateString()) {
+            if ($startingHour < Carbon::now()->format("H").'00') {
+                return response()->json([
+                    'status' => 'error',
+                    'message' => 'Tidak dapat membooking dijam yang sudah berlalu.',
+                ], 500);
+            }
+        }
+
         $ending = Carbon::parse($date . ' ' . $startingHour)->addHour($request->duration);
 
         $startingTimestamp = Carbon::parse($date . ' ' .$startingHour)->timestamp;
