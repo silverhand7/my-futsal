@@ -31,4 +31,22 @@ class HomeController extends Controller
             'event' => Event::findOrFail($id)
         ]);
     }
+
+    public function readNotifications()
+    {
+        return auth()->guard('customer')->user()->readNotifications();
+    }
+
+    public function watchNewNotifications()
+    {
+        $notifications = auth()->guard('customer')->user()->watchNewNotifications();
+        return [
+            'count' => $notifications->count(),
+            'data' => $notifications->map(function($notification) {
+                $data = json_decode($notification->data);
+                $data->id = $notification->id;
+                return $data;
+            }),
+        ];
+    }
 }

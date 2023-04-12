@@ -12,6 +12,26 @@
     <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@300;400;700&display=swap" rel="stylesheet">
     @vite('resources/css/app.css')
     <meta name="csrf-token" content="{{ csrf_token() }}">
+    <style>
+      .notification-item a {
+        text-decoration: none !important;
+        color: black;
+      }
+      .notification-item:hover {
+        background: #e3e2e2;
+        cursor: pointer;
+      }
+      .notification-dot:before {
+          background: red;
+          width: 10px;
+          height: 10px;
+          border-radius: 50%;
+          content: "";
+          position: absolute;
+          top: 7px;
+          right: 7px;
+      }
+    </style>
 </head>
 <body style="background-color:#F1F5F9">
     <nav class="navbar navbar-expand-lg bg-white">
@@ -42,6 +62,14 @@
 
                 @auth('customer')
                 <ul class="navbar-nav">
+                  <li class="nav-item dropdown" id="notification-dropdown" onclick="readNotification()">
+                    <a class="nav-link {{ $notifications_unread != 0 ? 'notification-dot' : '' }}" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                      <img src="{{ asset('img/bell.png') }}" alt="bell" width="18">
+                    </a>
+                    <ul class="dropdown-menu end-0 right-menu" style="width:250px">
+                        @include('layouts.notifications')
+                    </ul>
+                  </li>
                   <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                       {{ auth()->guard('customer')->user()->full_name }}
@@ -84,5 +112,25 @@
 
     @vite('resources/js/app.js')
     <script src="{{ asset('js/booking-checker.js') }}"></script>
+    @auth('customer')
+    <script src="{{ asset('js/notification-checker.js') }}"></script>
+    <script>
+      function readNotification() {
+        const httpRequest = new XMLHttpRequest();
+        httpRequest.open("post", "{{ route('customer.read.notifications') }}");
+        httpRequest.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+        httpRequest.onreadystatechange = () => {
+          if (httpRequest.readyState === XMLHttpRequest.DONE) {
+            if (httpRequest.status === 200) {
+              document.querySelectorAll('#notification-dropdown a')[0].classList.remove('notification-dot')
+            } else {
+              alert("There was a problem with the request.");
+            }
+          }
+        };
+        httpRequest.send();
+      }
+    </script>
+    @endif
 </body>
 </html>

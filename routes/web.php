@@ -37,6 +37,8 @@ Route::group(['as' => 'customer.'], function(){
         Route::get('booking/detail/{id}', [CustomerBookingController::class, 'detail'])->name('booking.detail');
         Route::post('booking/payment/{id}', [CustomerBookingController::class, 'paymentAction'])->name('booking.payment');
     });
+    Route::post('/read-notifications', [HomeController::class, 'readNotifications'])->name('read.notifications');
 });
 
 Route::get('/booking-check', [CustomerBookingController::class, 'checkExpiredBooking']);
+Route::get('/notification-check', [HomeController::class, 'watchNewNotifications']);
