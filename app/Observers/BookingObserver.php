@@ -53,24 +53,26 @@ class BookingObserver
             }
         }
 
-        $customer = $booking->customer;
-        if ($booking->status == 'canceled') {
-            $message = 'Booking anda dengan ID ' . $booking->id . ' telah dibatalkan.';
-        }
-        if ($booking->status == 'booked') {
-            $message = 'Booking anda dengan ID ' . $booking->id . ' sudah dikonfirmasi.';
-        }
-        if ($booking->status == 'rejected') {
-            $message = 'Booking anda dengan ID ' . $booking->id . ' ditolak.';
-        }
+        if (in_array($booking->status, ['canceled', 'booked', 'rejected'])) {
+            $customer = $booking->customer;
+            if ($booking->status == 'canceled') {
+                $message = 'Booking anda dengan ID ' . $booking->id . ' telah dibatalkan.';
+            }
+            if ($booking->status == 'booked') {
+                $message = 'Booking anda dengan ID ' . $booking->id . ' sudah dikonfirmasi.';
+            }
+            if ($booking->status == 'rejected') {
+                $message = 'Booking anda dengan ID ' . $booking->id . ' ditolak.';
+            }
 
-        $customer->notify(
-            NovaNotification::make()
-                ->message($message)
-                ->url(route('customer.booking.detail', $booking->id))
-                ->icon('collection')
-                ->type('info')
-        );
+            $customer->notify(
+                NovaNotification::make()
+                    ->message($message)
+                    ->url(route('customer.booking.detail', $booking->id))
+                    ->icon('collection')
+                    ->type('info')
+            );
+        }
     }
 
     /**

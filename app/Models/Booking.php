@@ -74,7 +74,7 @@ class Booking extends Model
 
     public static function getBookedTime($fieldId, $date, $startingTime, $endingTime, $id = null)
     {
-        return self::where(function($query) use ($startingTime, $endingTime){
+        $query = self::where(function($query) use ($startingTime, $endingTime){
             $query->whereRaw("'$startingTime' BETWEEN starting_timestamp and ending_timestamp");
             $query->orWhereRaw("'$endingTime' BETWEEN starting_timestamp and ending_timestamp");
         })
@@ -91,6 +91,8 @@ class Booking extends Model
             $query->where('id', '!=', $id);
         })
         ->get();
+
+        return $query;
     }
 
     public static function getBookingsCalendar()

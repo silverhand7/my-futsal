@@ -14,9 +14,11 @@
                 <div v-if="field.id != 4">
                     <h2 class="field-name">{{ field.name }}</h2>
                     <div v-for="hour, index in hours" :key="index">
-                        <div :class="`booking-hour ` + [
+                        <div :class="['booking-hour',
                                 (selectedHours.includes(hour) && selectedField.id == field.id
-                                || bookedHours[field.id].includes(hour)) ? 'booking-hour-selected' : ''
+                                || bookedHours[field.id].includes(hour)) ? 'booking-hour-selected' : '',
+                                checkDisabledHour(hour) ? 'booking-disabled' : '',
+                                checkDisabledField(field.id, hour) ? 'booking-disabled' : '',
                             ]"
                             v-on:click="handleClickHour(field, hour, index)"
                             v-on:mousedown="handleMouseDown"
@@ -82,34 +84,44 @@
             handleMouseUp() {
                 this.isDragging = false;
                 setTimeout(() => {
-                    const startHour = this.selectedHours[0].split(' - ', 1)[0];
-                    const endHour = this.selectedHours[this.selectedHours.length - 1].split(' - ')[1];
-                    if (window.confirm(`Apakah anda yakin akan membooking ${this.selectedField.name} pada tanggal ${this.date} pada jam ${startHour} sampai ${endHour}`)) {
-                        axios.post('/booking', {
-                            field_id: this.selectedField.id,
-                            date: this.date,
-                            starting_hour: this.selectedHours[0],
-                            duration: this.selectedHours.length
-                        }).then(response => {
-                            window.location = response.data.path;
-                        }).catch(error => {
-                            alert(error.response.data.message);
-                            window.location.reload();
-                        })
-                    } else {
-                        this.selectedHours = [];
+                    if (this.selectedHours.length !== 0) {
+                        const startHour = this.selectedHours[0].split(' - ', 1)[0];
+                        const endHour = this.selectedHours[this.selectedHours.length - 1].split(' - ')[1];
+                        if (window.confirm(`Apakah anda yakin akan membooking ${this.selectedField.name} pada tanggal ${this.date} pada jam ${startHour} sampai ${endHour}`)) {
+                            axios.post('/booking', {
+                                field_id: this.selectedField.id,
+                                date: this.date,
+                                starting_hour: this.selectedHours[0],
+                                duration: this.selectedHours.length
+                            }).then(response => {
+                                window.location = response.data.path;
+                            }).catch(error => {
+                                alert(error.response.data.message);
+                                window.location.reload();
+                            })
+                        } else {
+                            this.selectedHours = [];
+                        }
                     }
                 }, 100);
+
             },
-            handleMouseMove(fieldId, hour, index) {
+            handleMouseMove(field, hour, index) {
                 if(this.isDragging) {
-                    this.selectField(fieldId);
-                    this.selectHour(hour);
+                    if (!this.checkDisabledHour(hour) && !this.checkDisabledField(field.id, hour)) {
+                        this.selectField(field);
+                        this.selectHour(hour);
+                    } else {
+                        this.isDragging = false;
+                        this.selectedHours = [];
+                    }
                 }
             },
-            handleClickHour(fieldId, hour, index) {
-                this.selectField(fieldId);
-                this.selectHour(hour);
+            handleClickHour(field, hour, index) {
+                if (!this.checkDisabledHour(hour) && !this.checkDisabledField(field.id, hour)) {
+                    this.selectField(field);
+                    this.selectHour(hour);
+                }
                 // this.handleMouseUp();
             },
             selectHour(hour) {
@@ -119,6 +131,31 @@
 
                 }
                 // console.log(this.selectedHours);
+            },
+
+            checkDisabledHour(hour) {
+                const todayDate = new Date().toISOString().substr(0, 10);
+                const currentHour = new Date().getHours();
+                hour = hour.substring(0, 2);
+
+                if (todayDate == this.date) {
+                    if (hour >= currentHour) {
+                        return false;
+                    } else {
+                        return true;
+                    }
+                }
+            },
+
+            checkDisabledField(fieldId, hour) {
+                if (fieldId == 3) {
+                    if (this.bookedHours[2].includes(hour)) {
+                        return true;
+                    }
+                    if (this.bookedHours[1].includes(hour)) {
+                        return true;
+                    }
+                }
             },
 
             selectField(field) {
@@ -162,7 +199,7 @@
                     })
                 })
                 console.log(this.fields);
-                // console.log(this.bookedHours);
+                console.log(this.bookedHours);
             },
 
             getHours() {
@@ -179,8 +216,9 @@
                     '17:00 - 18:00',
                     '18:00 - 19:00',
                     '19:00 - 20:00',
-                    '21:00 - 21:00',
-                    '22:00 - 22:00',
+                    '20:00 - 21:00',
+                    '21:00 - 22:00',
+                    '22:00 - 23:00',
                     '23:00 - 00:00',
                 ]
             },
@@ -208,6 +246,12 @@
     border: 1px solid #6c757d;
     color:white
   }
+
+  :not(.booking-hour-selected).booking-disabled {
+    cursor: no-drop;
+    background: gainsboro;
+    border-color: #b1b1b1;
+}
 
   @media screen and (max-width: 480px) {
     .field-name {
