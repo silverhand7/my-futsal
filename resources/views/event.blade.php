@@ -10,11 +10,13 @@
     </div>
     <div class="row mt-3">
         @foreach ($events as $event)
-            <div class="col-md-4 mb-4">
+            <div class="col-lg-4 col-md-6 mb-4">
                 <div class="w-100">
-                    <a href="{{ route('event.detail', $event->id) }}">
-                        <img src="{{ asset('storage/'.$event->image) }}" class="img-fluid">
-                    </a>
+                    <div class="event-image-container">
+                        <a href="{{ route('event.detail', $event->id) }}">
+                            <img src="{{ asset('storage/'.$event->image) }}" class="img-fluid">
+                        </a>
+                    </div>
                 </div>
             </div>
         @endforeach

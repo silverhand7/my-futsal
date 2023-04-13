@@ -31,6 +31,11 @@
           top: 7px;
           right: 7px;
       }
+      .event-image-container img {
+          object-fit: cover;
+          width: 100%;
+          height: 470px;
+      }
     </style>
 </head>
 <body style="background-color:#F1F5F9">
