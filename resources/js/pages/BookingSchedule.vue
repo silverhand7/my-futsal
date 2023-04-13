@@ -4,10 +4,14 @@
             <div class="col-md-6">
                 <input type="date" v-model="date" @change="changeDate" class="form-control">
             </div>
+            <div class="col-md-12 mt-4" v-if="fieldMessage != ''">
+                <div class="alert alert-warning">
+                    <b>Informasi:</b> {{ fieldMessage }}
+                </div>
+            </div>
         </div>
         <div class="row">
             <div
-                v-if="isFieldAvailable == true"
                 v-for="field in fields" :key="field.id"
                 class="col-4"
             >
@@ -30,9 +34,7 @@
                     </div>
                 </div>
             </div>
-            <div v-else>
-                <p>{{ fieldMessage }}</p>
-            </div>
+            <p>{{ fieldMessage }}</p>
         </div>
     </div>
   </template>
@@ -47,6 +49,7 @@
                 fields: [],
                 bookedHours: [],
                 selectedField: '',
+                fieldMessage: '',
                 selectedHours: [],
                 isDragging: false,
                 date: new Date().toISOString().substr(0, 10),
@@ -57,24 +60,7 @@
             this.getFields();
         },
         computed: {
-            isFieldAvailable() {
-                let status;
-                this.fields.forEach(field => {
-                    if (field.id == 4) {
-                        if (field.bookings.length == 0) {
-                            status = true;
-                        } else {
-                            status = false;
-                        }
-                    }
-                });
-                return status;
-            },
-            fieldMessage() {
-                if (this.isFieldAvailable == false) {
-                    return this.fields.find(field => field.id == 4).bookings[0].note;
-                }
-            },
+
         },
         methods: {
             handleMouseDown() {
@@ -160,6 +146,11 @@
                     if (this.bookedHours[3].includes(hour)) {
                         return true;
                     }
+
+                }
+
+                if (this.bookedHours[4].includes(hour)) {
+                    return true;
                 }
 
             },
@@ -203,9 +194,9 @@
                     this.fields.forEach(field => {
                         this.bookedHours[field.id] = this.checkBookingsHour(field);
                     })
+
+                    this.fieldMessage = this.fields.find(field => field.id == 4)?.bookings[0]?.note ?? '';
                 })
-                // console.log(this.fields);
-                // console.log(this.bookedHours);
             },
 
             getHours() {

@@ -12,6 +12,7 @@ use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Http\Requests\NovaRequest;
 use Illuminate\Support\Str;
+use Laravel\Nova\Fields\Number;
 use Laravel\Nova\Fields\Textarea;
 
 class FieldLog extends Resource
@@ -59,17 +60,38 @@ class FieldLog extends Resource
                     return $date->format('d/m/Y');
                 })
                 ->rules(['required']),
-            Hidden::make('starting_hour')->default('00:00'),
-            Hidden::make('ending_hour')->default('23:59'),
+
+            Text::make('Jam Mulai', 'starting_hour')
+                ->withMeta(['type' => 'time'])
+                ->rules(['required'])
+                ->default(function ($request) {
+                    return '08:00';
+                }),
+            Number::make('Durasi', 'duration')
+                ->rules(['required'])
+                ->withMeta(['placeholder' => 'Durasi (jam)'])
+                ->onlyOnForms()
+                ->help('Jam'),
+            Text::make('Jam Selesai', 'ending_hour')
+                ->dependsOn(['duration', 'starting_hour'],
+                function (Text $field, NovaRequest $request, FormData $formData) {
+                    if ($formData->duration !== null) {
+                        $field->value = Carbon::parse($formData->starting_hour)->addHour($formData->duration)->format('H:i');
+                    }
+                })
+                ->rules(['required'])
+                ->withMeta(['readonly' => true]),
             Hidden::make('starting_timestamp')
                 ->dependsOn(['date', 'starting_hour'],
                 function (Hidden $field, NovaRequest $request, FormData $formData) {
                     $field->value = Carbon::parse(Str::before($formData->date, 'T') . ' ' . $formData->starting_hour)->timestamp;
                 }),
             Hidden::make('ending_timestamp')
-                ->dependsOn(['date', 'ending_hour'],
+                ->dependsOn(['duration', 'starting_hour'],
                 function (Text $field, NovaRequest $request, FormData $formData) {
-                    $field->value = Carbon::parse(Str::before($formData->date, 'T') . ' ' . $formData->ending_hour)->timestamp;
+                    if ($formData->duration !== null) {
+                        $field->value = Carbon::parse($formData->starting_hour)->addHour($formData->duration)->timestamp;
+                    }
                 }),
             Hidden::make('field_id')->default(function(){
                 return Field::where('name', 'Lapangan Tidak Tersedia')->first()->id;

@@ -16,14 +16,16 @@ class BookingObserver
      */
     public function created(Booking $booking)
     {
-        foreach (User::all() as $user) {
-            $user->notify(
-                NovaNotification::make()
-                    ->message('Booking ID: ' . $booking->id . ' - ' . $booking->field->name . ' terbooking pada tanggal ' . $booking->date->format('d-m-Y') . ' selama ' . $booking->duration . ' jam, dari jam ' . $booking->starting_hour . ' sampai ' . $booking->ending_hour.'.')
-                    ->url('/resources/bookings/'.$booking->id)
-                    ->icon('collection')
-                    ->type('info')
-            );
+        if ($booking->field_id != 4) {
+            foreach (User::all() as $user) {
+                $user->notify(
+                    NovaNotification::make()
+                        ->message('Booking ID: ' . $booking->id . ' - ' . $booking->field->name . ' terbooking pada tanggal ' . $booking->date->format('d-m-Y') . ' selama ' . $booking->duration . ' jam, dari jam ' . $booking->starting_hour . ' sampai ' . $booking->ending_hour.'.')
+                        ->url('/resources/bookings/'.$booking->id)
+                        ->icon('collection')
+                        ->type('info')
+                );
+            }
         }
     }
 
@@ -35,43 +37,45 @@ class BookingObserver
      */
     public function updated(Booking $booking)
     {
-        if ($booking->status == 'paid' || $booking->status == 'canceled') {
-            foreach (User::all() as $user) {
-                if ($booking->status == 'paid') {
-                    $message = 'Booking ID: ' . $booking->id . ' - sudah dibayar.';
+        if ($booking->field_id != 4) {
+            if ($booking->status == 'paid' || $booking->status == 'canceled') {
+                foreach (User::all() as $user) {
+                    if ($booking->status == 'paid') {
+                        $message = 'Booking ID: ' . $booking->id . ' - sudah dibayar.';
+                    }
+                    if ($booking->status == 'canceled') {
+                        $message = 'Booking ID: ' . $booking->id . ' - dibatalkan.';
+                    }
+                    $user->notify(
+                        NovaNotification::make()
+                            ->message($message)
+                            ->url('/resources/bookings/'.$booking->id)
+                            ->icon('collection')
+                            ->type('info')
+                    );
                 }
+            }
+
+            if (in_array($booking->status, ['canceled', 'booked', 'rejected'])) {
+                $customer = $booking->customer;
                 if ($booking->status == 'canceled') {
-                    $message = 'Booking ID: ' . $booking->id . ' - dibatalkan.';
+                    $message = 'Booking anda dengan ID ' . $booking->id . ' telah dibatalkan.';
                 }
-                $user->notify(
+                if ($booking->status == 'booked') {
+                    $message = 'Booking anda dengan ID ' . $booking->id . ' sudah dikonfirmasi.';
+                }
+                if ($booking->status == 'rejected') {
+                    $message = 'Booking anda dengan ID ' . $booking->id . ' ditolak.';
+                }
+
+                $customer->notify(
                     NovaNotification::make()
                         ->message($message)
-                        ->url('/resources/bookings/'.$booking->id)
+                        ->url(route('customer.booking.detail', $booking->id))
                         ->icon('collection')
                         ->type('info')
                 );
             }
-        }
-
-        if (in_array($booking->status, ['canceled', 'booked', 'rejected'])) {
-            $customer = $booking->customer;
-            if ($booking->status == 'canceled') {
-                $message = 'Booking anda dengan ID ' . $booking->id . ' telah dibatalkan.';
-            }
-            if ($booking->status == 'booked') {
-                $message = 'Booking anda dengan ID ' . $booking->id . ' sudah dikonfirmasi.';
-            }
-            if ($booking->status == 'rejected') {
-                $message = 'Booking anda dengan ID ' . $booking->id . ' ditolak.';
-            }
-
-            $customer->notify(
-                NovaNotification::make()
-                    ->message($message)
-                    ->url(route('customer.booking.detail', $booking->id))
-                    ->icon('collection')
-                    ->type('info')
-            );
         }
     }
 
