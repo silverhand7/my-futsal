@@ -34,7 +34,6 @@
                     </div>
                 </div>
             </div>
-            <p>{{ fieldMessage }}</p>
         </div>
     </div>
   </template>
@@ -178,6 +177,10 @@
             hourAddition(hour) {
                 let number = parseInt(hour.slice(0, 2)) + 1;
 
+                if (number == 24){
+                    return number.toString().length == 1 ? `0${number}:00` : `00:00`;
+                }
+
                 return number.toString().length == 1 ? `0${number}:00` : `${number}:00`;
             },
 
@@ -196,6 +199,8 @@
                     })
 
                     this.fieldMessage = this.fields.find(field => field.id == 4)?.bookings[0]?.note ?? '';
+
+                    console.log(this.bookedHours);
                 })
             },
 
