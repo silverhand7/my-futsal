@@ -155,7 +155,13 @@
                     if (this.bookedHours[1].includes(hour)) {
                         return true;
                     }
+                } else {
+                    // console.log(this.bookedHours[3].includes(hour));
+                    if (this.bookedHours[3].includes(hour)) {
+                        return true;
+                    }
                 }
+
             },
 
             selectField(field) {
@@ -198,8 +204,8 @@
                         this.bookedHours[field.id] = this.checkBookingsHour(field);
                     })
                 })
-                console.log(this.fields);
-                console.log(this.bookedHours);
+                // console.log(this.fields);
+                // console.log(this.bookedHours);
             },
 
             getHours() {
