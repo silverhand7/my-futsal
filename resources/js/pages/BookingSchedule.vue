@@ -52,11 +52,12 @@
                 selectedHours: [],
                 isDragging: false,
                 date: new Date().toISOString().substr(0, 10),
+                // date: '2023-04-17',
                 hours: this.getHours(),
             }
         },
-        created() {
-            this.getFields();
+        async created() {
+            await this.getFields();
         },
         computed: {
 
@@ -164,13 +165,15 @@
                     let diff = (field.bookings[i].ending_timestamp - field.bookings[i].starting_timestamp) / 60 / 60;
                     let starting_hour = field.bookings[i].starting_hour.slice(0, -3);
                     let starting_hour_index = this.getHours().indexOf(starting_hour + ' - ' + this.hourAddition(starting_hour));
-
+                    let hour = '';
+                    console.log(diff);
                     for (let j = 0; j < diff; j++) {
-                        let hour = this.getHours()[starting_hour_index + j];
+                        hour = this.getHours()[starting_hour_index + j];
+                        // console.log(hour);
                         data.push(hour);
                     }
                 }
-
+                // console.log(data);
                 return data;
             },
 
@@ -184,14 +187,14 @@
                 return number.toString().length == 1 ? `0${number}:00` : `${number}:00`;
             },
 
-            changeDate() {
-                this.getFields(this.date);
+            async changeDate() {
+                await this.getFields();
             },
 
-            async getFields(date = null) {
+            async getFields() {
                 this.fields = [];
                 this.bookedHours = [];
-                await axios.get('./api/get-fields/'+date).then(response => {
+                await axios.get('./api/get-fields/'+this.date).then(response => {
                     this.fields = response['data'];
 
                     this.fields.forEach(field => {
@@ -199,7 +202,7 @@
                     })
 
                     this.fieldMessage = this.fields.find(field => field.id == 4)?.bookings[0]?.note ?? '';
-
+                    // console.log(this.fields);
                     console.log(this.bookedHours);
                 })
             },

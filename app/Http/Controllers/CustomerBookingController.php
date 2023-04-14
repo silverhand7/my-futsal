@@ -30,7 +30,7 @@ class CustomerBookingController extends Controller
             'field_id' => ['required'],
             'date' => ['required', new BookingDateRule()],
             'starting_hour' => ['required'],
-            'duration' => ['required', 'numeric', 'max:5'],
+            'duration' => ['required', 'numeric'],
         ]);
 
         $date = $request->date;

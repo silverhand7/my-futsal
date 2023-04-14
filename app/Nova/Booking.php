@@ -91,10 +91,11 @@ class Booking extends Resource
                     $field->value = Carbon::parse(Str::before($formData->date, 'T') . ' ' . $formData->starting_hour)->timestamp;
                 }),
             Hidden::make('ending_timestamp')
-                ->dependsOn(['duration', 'starting_hour'],
+                ->dependsOn(['duration', 'starting_hour', 'date'],
                 function (Text $field, NovaRequest $request, FormData $formData) {
+                    $date = Carbon::parse($formData->date)->format('Y-m-d');
                     if ($formData->duration !== null) {
-                        $field->value = Carbon::parse($formData->starting_hour)->addHour($formData->duration)->timestamp;
+                        $field->value = Carbon::parse($date . ' ' . $formData->starting_hour)->addHour($formData->duration)->timestamp;
                     }
                 }),
 

@@ -23,7 +23,7 @@ setInterval(() => {
                     document.querySelector('#notification-dropdown ul').insertAdjacentHTML('afterbegin', html);
                 }
             }
-            console.log('New Notification ' + response.count);
+            // console.log('New Notification ' + response.count);
         }
     }
 }, 2000); // every 2 seconds check new notification

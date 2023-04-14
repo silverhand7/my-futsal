@@ -13,6 +13,7 @@ class FieldController extends Controller
         if ($date == "null") {
             $date = date('Y-m-d');
         }
+        // dd($date);
         $data = Field::with(['bookings' => function ($query) use ($date){
             $query->where('date', '=', $date)
             ->whereNotIn('status', ['rejected', 'canceled']);
