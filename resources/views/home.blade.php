@@ -4,7 +4,7 @@
 <div class="container">
     <div class="row">
         <div class="col-md-12">
-            <h1>Jadwal Lapangan</h1>
+            <h1>Field Schedule</h1>
         </div>
         <div class="col-md-12">
             <div class="card">

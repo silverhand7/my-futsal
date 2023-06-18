@@ -16,7 +16,7 @@ use Laravel\Nova\Lenses\Lens;
 
 class SalesLedger extends Lens
 {
-    public $name = 'Buku Besar Penjualan';
+    public $name = 'Sale Ledger';
     /**
      * The columns that should be searched.
      *
@@ -49,12 +49,12 @@ class SalesLedger extends Lens
     public function fields(NovaRequest $request)
     {
         return [
-            Date::make('Tanggal', 'sold_at')
+            Date::make('Date', 'sold_at')
                 ->displayUsing(function($date){
                     return $date->format('d/m/Y');
                 }),
             Text::make('Product', 'product_name'),
-            Currency::make('Harga', 'product_price'),
+            Currency::make('Price', 'product_price'),
             Number::make('Qty'),
             Currency::make('Total')
         ];

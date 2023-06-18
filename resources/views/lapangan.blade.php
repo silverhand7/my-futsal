@@ -12,20 +12,20 @@
 <div class="container">
     <div class="row mb-4">
         <div class="col-md-12">
-            <h1>Tentang Kami</h1>
+            <h1>About us</h1>
         </div>
         <div class="col-md-12">
-            <p>Lapangan futsal kami terbuat dari material terbaik. Kami tidak menginginkan lapangan yang hanya indah dipandang, tetapi juga nyaman untuk bermain. Oleh karena itu, kami memastikan bahwa lapangan kami memiliki ukuran yang tepat sesuai dengan standar internasional. Ini membuat pemain dapat bergerak dengan leluasa dan menikmati permainan dengan maksimal. Selain itu, kami selalu merawat dan menjaga lapangan agar selalu nyaman untuk dimainkan sepanjang waktu. Kami juga memiliki fasilitas pencahayaan yang terbaik, sehingga pemain dapat bermain dengan nyaman pada siang maupun malam hari. Kami benar-benar percaya bahwa lapangan futsal yang nyaman adalah salah satu faktor yang paling penting dalam menikmati permainan sepak bola. Dan kami senang dapat menyediakan lapangan futsal terbaik bagi para pemain kami.</p>
+            <p>Our futsal court is made of the best materials. We don't want a court that is only beautiful to look at, but also comfortable to play on. Therefore, we ensure that our pitches are the right size according to international standards. This allows players to move freely and enjoy the game to the fullest. In addition, we always take care of and maintain the field so that it is comfortable to play at all times. We also have the best lighting facilities, so players can play comfortably both day and night. We truly believe that a comfortable futsal field is one of the most important factors in enjoying the game of soccer. And we are happy to provide the best futsal field for our players.</p>
         </div>
         <div class="col-md-12">
             <table class="table">
                 <tr>
-                    <td>Alamat</td>
+                    <td>Address</td>
                     <td>:</td>
                     <td>Jl. Teuku Umar Barat No.351a, Padangsambian, Denpasar Barat, Denpasar City, Bali 80117</td>
                 </tr>
                 <tr>
-                    <td>No. Telp</td>
+                    <td>Phone Number</td>
                     <td>:</td>
                     <td>087743354422</td>
                 </tr>

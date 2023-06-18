@@ -12,10 +12,6 @@ use Laravel\Nova\Http\Requests\NovaRequest;
 
 class Sale extends Resource
 {
-    public static function label()
-    {
-        return "Penjualan";
-    }
     /**
      * The model the resource corresponds to.
      *
@@ -49,7 +45,7 @@ class Sale extends Resource
     {
         return [
             ID::make()->sortable(),
-            Text::make('Tgl', function(){
+            Text::make('Date', function(){
                     return $this->sold_at->format('d M Y H:i');
                 })
                 ->exceptOnForms(),

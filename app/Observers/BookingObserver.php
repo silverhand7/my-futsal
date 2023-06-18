@@ -20,7 +20,7 @@ class BookingObserver
             foreach (User::all() as $user) {
                 $user->notify(
                     NovaNotification::make()
-                        ->message('Booking ID: ' . $booking->id . ' - ' . $booking->field->name . ' terbooking pada tanggal ' . $booking->date->format('d-m-Y') . ' selama ' . $booking->duration . ' jam, dari jam ' . $booking->starting_hour . ' sampai ' . $booking->ending_hour.'.')
+                        ->message('Booking ID: ' . $booking->id . ' - ' . $booking->field->name . ' is booked on ' . $booking->date->format('d-m-Y') . ' for ' . $booking->duration . ' hours, from ' . $booking->starting_hour . ' to ' . $booking->ending_hour.'.')
                         ->url('/resources/bookings/'.$booking->id)
                         ->icon('collection')
                         ->type('info')
@@ -41,10 +41,10 @@ class BookingObserver
             if ($booking->status == 'paid' || $booking->status == 'canceled') {
                 foreach (User::all() as $user) {
                     if ($booking->status == 'paid') {
-                        $message = 'Booking ID: ' . $booking->id . ' - sudah dibayar.';
+                        $message = 'Booking ID: ' . $booking->id . ' - has been paid.';
                     }
                     if ($booking->status == 'canceled') {
-                        $message = 'Booking ID: ' . $booking->id . ' - dibatalkan.';
+                        $message = 'Booking ID: ' . $booking->id . ' - has been canceled.';
                     }
                     $user->notify(
                         NovaNotification::make()
@@ -59,13 +59,13 @@ class BookingObserver
             if (in_array($booking->status, ['canceled', 'booked', 'rejected'])) {
                 $customer = $booking->customer;
                 if ($booking->status == 'canceled') {
-                    $message = 'Booking anda dengan ID ' . $booking->id . ' telah dibatalkan.';
+                    $message = 'Your Booking ID ' . $booking->id . ' has been canceled.';
                 }
                 if ($booking->status == 'booked') {
-                    $message = 'Booking anda dengan ID ' . $booking->id . ' sudah dikonfirmasi.';
+                    $message = 'Your Booking ID ' . $booking->id . ' has been confirmed.';
                 }
                 if ($booking->status == 'rejected') {
-                    $message = 'Booking anda dengan ID ' . $booking->id . ' ditolak.';
+                    $message = 'Your Booking ID ' . $booking->id . ' has been rejected.';
                 }
 
                 $customer->notify(

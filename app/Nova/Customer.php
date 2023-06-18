@@ -61,7 +61,7 @@ class Customer extends Resource
                 ->creationRules('required', Rules\Password::defaults())
                 ->updateRules('nullable', Rules\Password::defaults()),
 
-            Number::make('No. Telp', 'phone_number')
+            Number::make('Phone Number', 'phone_number')
                 ->rules('required'),
         ];
     }

@@ -42,7 +42,7 @@ class Event extends Resource
 
     public static function label()
     {
-        return "Event / Turnamen";
+        return "Event / Tournament";
     }
 
     /**
@@ -56,18 +56,18 @@ class Event extends Resource
         return [
             ID::make()->sortable(),
 
-            Text::make('Nama Event/Turnamen', 'name')
+            Text::make('Name Event/Tournament', 'name')
                 ->rules('required', 'max:255'),
 
-            Textarea::make('Deskripsi', 'description'),
+            Textarea::make('Description', 'description'),
 
-            Image::make('Foto', 'image')->disk('public')->path('event'),
+            Image::make('Photo', 'image')->disk('public')->path('event'),
 
-            Date::make('Tgl. Mulai', 'start_date')->displayUsing(function($date){
+            Date::make('Start Date', 'start_date')->displayUsing(function($date){
                 return $date->format('d/m/Y');
             }),
 
-            Date::make('Tgl. Selesai', 'end_date')->displayUsing(function($date){
+            Date::make('End Date', 'end_date')->displayUsing(function($date){
                 return $date->format('d/m/Y');
             }),
 

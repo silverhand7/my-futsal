@@ -12,7 +12,7 @@
                     <form action="{{ route('customer.register.action') }}" method="post">
                         @csrf
                         <div class="form-group mb-3">
-                            <label for="">Nama</label>
+                            <label for="">Name</label>
                             <input type="text" name="name" class="form-control" value="{{ old('name') }}">
                             @error('name')
                                 <p class="text-danger fs-6" role="alert">
@@ -40,7 +40,7 @@
                         </div>
 
                         <div class="form-group mb-4">
-                            <label for="">No. Telp</label>
+                            <label for="">Phone Number</label>
                             <input type="text" name="phone_number" class="form-control" value="{{ old('phone_number') }}">
                             @error('phone_number')
                                 <p class="text-danger fs-6" role="alert">
@@ -51,7 +51,7 @@
 
                         <div class="form-group d-grid gap-2">
 
-                            <input type="submit" value="Daftar" class="btn btn-primary btn-block">
+                            <input type="submit" value="Register" class="btn btn-primary btn-block">
                         </div>
                     </form>
                 </div>

@@ -53,10 +53,10 @@
                 <a class="nav-link active" aria-current="page"  href="{{ url('/') }}">Home</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="{{ route('lapangan') }}">Tentang Kami</a>
+                <a class="nav-link" href="{{ route('lapangan') }}">My Stadium Futsal</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="{{ route('event') }}">Event / Turnamen</a>
+                <a class="nav-link" href="{{ route('event') }}">Event / Tournament</a>
               </li>
             </ul>
             <div class="d-fex">
@@ -80,7 +80,7 @@
                       {{ auth()->guard('customer')->user()->full_name }}
                     </a>
                     <ul class="dropdown-menu end-0 right-menu">
-                      <li><a class="dropdown-item" href="{{ route('customer.booking.list') }}">Booking Saya</a></li>
+                      <li><a class="dropdown-item" href="{{ route('customer.booking.list') }}">My Bookings</a></li>
                       <!-- <li><a class="dropdown-item" href="#">Akun</a></li> -->
                       <li><hr class="dropdown-divider"></li>
                       <li>
@@ -100,13 +100,13 @@
     </nav>
     @if(session()->has('success'))
       <div class="alert alert-success alert-dismissible fade show" role="alert">
-        <strong>Selamat!</strong> {{ session()->get('success') }}
+        <strong>Congratulations!</strong> {{ session()->get('success') }}
         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
       </div>
     @endif
     @if(session()->has('error'))
       <div class="alert alert-danger alert-dismissible fade show" role="alert">
-        <strong>Maaf!</strong> {{ session()->get('error') }}
+        <strong>Sorry!</strong> {{ session()->get('error') }}
         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
       </div>
     @endif

@@ -15,7 +15,7 @@ use Laravel\Nova\Lenses\Lens;
 
 class BookingLedger extends Lens
 {
-    public $name = 'Buku Besar Booking';
+    public $name = 'Booking Ledger';
     /**
      * The columns that should be searched.
      *
@@ -45,7 +45,7 @@ class BookingLedger extends Lens
     {
         return [
             'bookings.*',
-            DB::raw('fields.hourly_rate * duration as pendapatan')
+            DB::raw('fields.hourly_rate * duration as revenue')
         ];
     }
 
@@ -59,12 +59,12 @@ class BookingLedger extends Lens
     {
         return [
             BelongsTo::make('Field'),
-            Date::make('Tanggal', 'date')
+            Date::make('Date', 'date')
                 ->displayUsing(function($date){
                     return $date->format('d/m/Y');
                 }),
-            Text::make('Durasi Sewa', 'duration')->displayUsing(fn($duration) => $duration . ' Jam'),
-            Currency::make('pendapatan')
+            Text::make('Duration', 'duration')->displayUsing(fn($duration) => $duration . ' Jam'),
+            Currency::make('revenue')
 
         ];
     }

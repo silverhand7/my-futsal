@@ -40,11 +40,6 @@ class FieldLog extends Resource
         'id',
     ];
 
-    public static function label()
-    {
-        return "Log Lapangan";
-    }
-
     /**
      * Get the fields displayed by the resource.
      *
@@ -55,24 +50,24 @@ class FieldLog extends Resource
     {
         return [
             // ID::make()->sortable(),
-            Date::make('Tanggal', 'date')
+            Date::make('Date', 'date')
                 ->displayUsing(function($date){
                     return $date->format('d/m/Y');
                 })
                 ->rules(['required']),
 
-            Text::make('Jam Mulai', 'starting_hour')
+            Text::make('Start Hour', 'starting_hour')
                 ->withMeta(['type' => 'time'])
                 ->rules(['required'])
                 ->default(function ($request) {
                     return '08:00';
                 }),
-            Number::make('Durasi', 'duration')
+            Number::make('Duration', 'duration')
                 ->rules(['required'])
                 ->withMeta(['placeholder' => 'Durasi (jam)'])
                 ->onlyOnForms()
                 ->help('Jam'),
-            Text::make('Jam Selesai', 'ending_hour')
+            Text::make('End Hour', 'ending_hour')
                 ->dependsOn(['duration', 'starting_hour', 'date'],
                 function (Text $field, NovaRequest $request, FormData $formData) {
                     if ($formData->duration !== null) {
@@ -98,7 +93,7 @@ class FieldLog extends Resource
                 return Field::where('name', 'Lapangan Tidak Tersedia')->first()->id;
             }),
             Hidden::make('status')->default('booked'),
-            Text::make('Catatan', 'note'),
+            Text::make('Note', 'note'),
         ];
     }
 

@@ -6,7 +6,7 @@
             </div>
             <div class="col-md-12 mt-4" v-if="fieldMessage != ''">
                 <div class="alert alert-warning">
-                    <b>Informasi:</b> {{ fieldMessage }}
+                    <b>Information:</b> {{ fieldMessage }}
                 </div>
             </div>
         </div>
@@ -19,8 +19,8 @@
                     <h2 class="field-name">{{ field.name }}</h2>
                     <div v-for="hour, index in hours" :key="index">
                         <div :class="['booking-hour',
-                                (selectedHours.includes(hour) && selectedField.id == field.id
-                                || bookedHours[field.id].includes(hour)) ? 'booking-hour-selected' : '',
+                                (selectedHours.includes(hour) && selectedField.id == field.id) ? 'booking-hour-selected' : '',
+                                bookedHours[field.id].includes(hour) ? 'booking-disabled' : '',
                                 checkDisabledHour(hour) ? 'booking-disabled' : '',
                                 checkDisabledField(field.id, hour) ? 'booking-disabled' : '',
                             ]"
@@ -73,7 +73,7 @@
                     if (this.selectedHours.length !== 0) {
                         const startHour = this.selectedHours[0].split(' - ', 1)[0];
                         const endHour = this.selectedHours[this.selectedHours.length - 1].split(' - ')[1];
-                        if (window.confirm(`Apakah anda yakin akan membooking ${this.selectedField.name} pada tanggal ${this.date} pada jam ${startHour} sampai ${endHour}`)) {
+                        if (window.confirm(`Are you sure you will book the ${this.selectedField.name} on ${this.date} at ${startHour} - ${endHour}`)) {
                             axios.post('/booking', {
                                 field_id: this.selectedField.id,
                                 date: this.date,
@@ -146,13 +146,11 @@
                     if (this.bookedHours[3].includes(hour)) {
                         return true;
                     }
-
                 }
 
                 if (this.bookedHours[4].includes(hour)) {
                     return true;
                 }
-
             },
 
             selectField(field) {
@@ -249,9 +247,10 @@
   .booking-hour:hover {
     background: #52b668;
   }
+
   .booking-hour-selected {
     background: #52b668;
-    border: 1px solid #218838;
+    border: 1px solid #52b668;
     color:white
   }
 

@@ -9,7 +9,7 @@ use Laravel\Nova\Metrics\Value;
 class TotalSales extends Value
 {
     public $icon = 'shopping-cart';
-    public $name = 'Total Penjualan';
+    public $name = 'Total Sales';
     /**
      * Calculate the value of the metric.
      *

@@ -41,10 +41,10 @@
                                     </label>
                                 </div>
                                 <div>
-                                    Belum punya akun? <a href="{{ route('customer.register.form') }}">Daftar</a>
+                                    Don't have an account? <a href="{{ route('customer.register.form') }}">Register</a>
                                 </div>
                             </div>
-                            <input type="submit" value="Masuk" class="btn btn-primary btn-block">
+                            <input type="submit" value="Login" class="btn btn-primary btn-block">
                         </div>
                     </form>
                 </div>

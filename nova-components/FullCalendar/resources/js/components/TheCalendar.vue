@@ -3,9 +3,9 @@
         <div class="w-50">
             <table class="table w-full mb-4">
                 <tr class="">
-                    <td class="px-2 py-1 font-bold">Lapangan</td>
-                    <td class="px-2 py-1 font-bold">Terbooking</td>
-                    <td class="px-2 py-1 font-bold">Belum Dikonfirmasi</td>
+                    <td class="px-2 py-1 font-bold">Field</td>
+                    <td class="px-2 py-1 font-bold">Booked</td>
+                    <td class="px-2 py-1 font-bold">Not Confirmed</td>
                 </tr>
                 <tr v-for="field in fields" :key="field.id">
                     <td class="px-2 py-1 ">{{ field.name }}</td>

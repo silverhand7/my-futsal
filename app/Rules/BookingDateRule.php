@@ -18,7 +18,7 @@ class BookingDateRule implements InvokableRule
     public function __invoke($attribute, $value, $fail)
     {
         if ($value < Carbon::now()->toDateString()) {
-            $fail('Tidak dapat membooking pada tanggal tersebut');
+            $fail('Unable to book on that date');
         }
     }
 }

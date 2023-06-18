@@ -40,7 +40,7 @@ class CustomerBookingController extends Controller
             if ($startingHour < Carbon::now()->format("H").'00') {
                 return response()->json([
                     'status' => 'error',
-                    'message' => 'Tidak dapat membooking dijam yang sudah berlalu.',
+                    'message' => 'Unable to book at hours that have passed.',
                 ], 500);
             }
         }
@@ -56,7 +56,7 @@ class CustomerBookingController extends Controller
         if ($bookings->count() >= 1) {
             return response()->json([
                 'status' => 'error',
-                'message' => 'Gagal membooking lapangan karena dijam dan tanggal tersebut lapangan sudah terbooking atau tidak tersedia.',
+                'message' => 'Failed to book the field because at that time and date the field was already booked or not available.',
             ], 422);
         }
 
@@ -108,7 +108,7 @@ class CustomerBookingController extends Controller
                 'status' => 'paid'
             ]);
 
-        return redirect()->back()->with('success', 'Berhasil mengupload bukti pembayaran, kami akan segera memproses booking anda.');
+        return redirect()->back()->with('success', 'Congratulations on successfully uploaded the proof of payment! We will immediately process your order.');
     }
 
     public function checkExpiredBooking()

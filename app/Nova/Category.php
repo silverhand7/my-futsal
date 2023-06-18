@@ -46,7 +46,7 @@ class Category extends Resource
             Text::make('Name')
                 ->sortable()
                 ->rules('required', 'max:255'),
-            Text::make('Keterangan')
+            Text::make('Note', 'keterangan')
                 ->rules('max:255'),
         ];
     }

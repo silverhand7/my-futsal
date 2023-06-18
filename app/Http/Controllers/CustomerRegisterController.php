@@ -32,6 +32,6 @@ class CustomerRegisterController extends Controller
 
         Auth::guard('customer')->login($customer);
 
-        return redirect('/')->with('success', 'Berhasil mendaftar akun.');
+        return redirect('/')->with('success', 'Account registered successfully.');
     }
 }

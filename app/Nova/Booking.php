@@ -57,25 +57,25 @@ class Booking extends Resource
             ID::make()->sortable(),
             BelongsTo::make('Customer'),
             BelongsTo::make('Field'),
-            Date::make('Tanggal', 'date')
+            Date::make('Date', 'date')
                 ->displayUsing(function($date){
                     return $date->format('d/m/Y');
                 })
                 ->rules(['required']),
-            Text::make('Jam Mulai', 'starting_hour')
+            Text::make('Start Hour', 'starting_hour')
                 ->withMeta(['type' => 'time'])
                 ->rules(['required'])
                 ->default(function ($request) {
                     return Carbon::now()->addHour(1)->startOfHour()->format('H:i');
                 }),
 
-            Number::make('Durasi', 'duration')
+            Number::make('Duration', 'duration')
                 ->rules(['required'])
-                ->withMeta(['placeholder' => 'Durasi (jam)'])
+                ->withMeta(['placeholder' => 'Duration (hour)'])
                 ->onlyOnForms()
-                ->help('Jam'),
+                ->help('Hour'),
 
-            Text::make('Jam Selesai', 'ending_hour')
+            Text::make('Ending Hour', 'ending_hour')
                 ->dependsOn(['duration', 'starting_hour'],
                 function (Text $field, NovaRequest $request, FormData $formData) {
                     if ($formData->duration !== null) {
@@ -99,7 +99,7 @@ class Booking extends Resource
                     }
                 }),
 
-            Image::make('Bukti Pembayaran', 'proof_of_payment')->disk('public')->path('proof_of_payment'),
+            Image::make('Proof of Payment', 'proof_of_payment')->disk('public')->path('proof_of_payment'),
 
             Select::make('Status')
                 ->options([

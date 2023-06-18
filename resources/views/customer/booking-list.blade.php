@@ -4,17 +4,17 @@
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8">
-            <h1>Booking Saya</h1>
+            <h1>My Bookings</h1>
             <div class="card">
                 <div class="card-body">
                     <table class="table">
                         <thead>
                             <tr>
-                                <th>Kode</th>
-                                <th>Lapangan</th>
-                                <th>Tanggal</th>
-                                <th>Jam Mulai</th>
-                                <th>Jam Selesai</th>
+                                <th>Code</th>
+                                <th>Field</th>
+                                <th>Date</th>
+                                <th>Start Hour</th>
+                                <th>End Hour</th>
                                 <th>Status</th>
                                 <th></th>
                             </tr>

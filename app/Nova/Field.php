@@ -35,11 +35,6 @@ class Field extends Resource
         'id', 'name', 'size'
     ];
 
-    public static function label()
-    {
-        return "Lapangan";
-    }
-
     /**
      * Get the fields displayed by the resource.
      *
@@ -57,7 +52,7 @@ class Field extends Resource
                     'normal' => 'Normal',
                     'big' => 'Big',
                 ]),
-            Currency::make('Harge Perjam', 'hourly_rate')
+            Currency::make('Hourly Price', 'hourly_rate')
                 ->rules('required'),
             Text::make('Note')->placeholder('(opsional)')
         ];
