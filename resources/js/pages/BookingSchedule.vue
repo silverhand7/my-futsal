@@ -239,23 +239,26 @@
     user-select: none; /* Standard syntax */
     width: 100%;
     padding: 10px;
-    background: white;
-    border: 1px solid #6c757d;
+    background: #218838;
+    border: 1px solid #218838;
+    color: white;
     margin-bottom:10px;
     border-radius: 5px;
     cursor: pointer;
   }
-
+  .booking-hour:hover {
+    background: #52b668;
+  }
   .booking-hour-selected {
-    background: #6c757d;
-    border: 1px solid #6c757d;
+    background: #52b668;
+    border: 1px solid #218838;
     color:white
   }
 
   :not(.booking-hour-selected).booking-disabled {
     cursor: no-drop;
-    background: gainsboro;
-    border-color: #b1b1b1;
+    background: #C82433;
+    border-color: #C82433;
 }
 
   @media screen and (max-width: 480px) {
