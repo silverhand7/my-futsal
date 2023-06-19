@@ -16,7 +16,7 @@ use Laravel\Nova\Lenses\Lens;
 
 class SalesLedger extends Lens
 {
-    public $name = 'Sale Ledger';
+    public $name = 'Sales Revenue';
     /**
      * The columns that should be searched.
      *

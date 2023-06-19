@@ -9,7 +9,7 @@ use Laravel\Nova\Metrics\Value;
 
 class SaleRevenue extends Value
 {
-    public $name = 'Income Sales';
+    public $name = 'Sales Revenue';
     /**
      * Calculate the value of the metric.
      *

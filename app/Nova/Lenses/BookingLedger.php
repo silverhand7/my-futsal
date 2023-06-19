@@ -15,7 +15,7 @@ use Laravel\Nova\Lenses\Lens;
 
 class BookingLedger extends Lens
 {
-    public $name = 'Booking Ledger';
+    public $name = 'Booking Revenue';
     /**
      * The columns that should be searched.
      *

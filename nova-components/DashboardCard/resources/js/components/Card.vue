@@ -1,7 +1,7 @@
 <template>
   <Card class="min-h-0 h-auto">
     <div class="px-3 py-3">
-      <p class="text-gray-500 font-light text-xl">Welcome to Dashboard. Owners special area to manage all futsal field data.</p>
+      <p class="text-gray-500 font-light text-xl">Welcome to Dashboard. Dedicated area for admin and owner to manage all futsal field data.</p>
     </div>
   </Card>
 </template>

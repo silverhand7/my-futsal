@@ -22,7 +22,6 @@
 import FullCalendar from '@fullcalendar/vue3'
 import timeGridPlugin from '@fullcalendar/timegrid'
 import interactionPlugin from '@fullcalendar/interaction'
-import idLocale from '@fullcalendar/core/locales/id'
 
 export default {
     props: {
@@ -34,7 +33,6 @@ export default {
     data() {
         return {
             calendarOptions: {
-                locale: idLocale,
                 plugins: [ timeGridPlugin ],
                 businessHours: {
                     daysOfWeek: [0, 1, 2, 3, 4, 5, 6],
